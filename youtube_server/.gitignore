@@ -39,3 +39,4 @@ lerna-debug.log*
 admin-firebase.json
 
 uploads/vids/cvt/*
+!uploads/vids/cvt/read.txt

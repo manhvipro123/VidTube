@@ -37,25 +37,25 @@ export class MediaController {
     }
   }
 
-  @Post('thumb')
-  @UseInterceptors(FileInterceptor('image',
-    {
-      storage: diskStorage({
-        destination: './uploads/images',
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-          const ext = extname(file.originalname);
-          const filename = `${uniqueSuffix}${ext}`;
-          cb(null, filename);
-        }
-      })
-    })
-  )
-  async cutThumb(@UploadedFile() file: Express.Multer.File) {
-    if (file) {
-      return await this.mediaService.cutThumbFromVid(file);
-    } else {
-      throw new HttpException('File is empty', HttpStatus.BAD_REQUEST);
-    }
-  }
+  // @Post('thumb')
+  // @UseInterceptors(FileInterceptor('image',
+  //   {
+  //     storage: diskStorage({
+  //       destination: './uploads/images',
+  //       filename: (req, file, cb) => {
+  //         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+  //         const ext = extname(file.originalname);
+  //         const filename = `${uniqueSuffix}${ext}`;
+  //         cb(null, filename);
+  //       }
+  //     })
+  //   })
+  // )
+  // async cutThumb(@UploadedFile() file: Express.Multer.File) {
+  //   if (file) {
+  //     return await this.mediaService.cutThumbFromVid(file);
+  //   } else {
+  //     throw new HttpException('File is empty', HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 }

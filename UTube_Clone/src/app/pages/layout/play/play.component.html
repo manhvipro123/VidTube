@@ -2,18 +2,15 @@
     <div class="row">
         <div class="play-video" *ngIf="video$|async as videoTest">
             <video #audioControl controls id="video" 
-                
-                
-                (play)="predictTime($event,videoTest._id)" 
+                (start)="resetCountable()"
+                (ended)="resetCountable()" 
+                (play)="predictTimeToCount($event,videoTest._id)" 
                 (pause)="stopCountingTime()" >
-                <!-- (ended)="plusView(videoTest._id)"  -->
+            
                 <!-- <source *ngIf="(video$|async)?.url"
                     src="http://127.0.0.1:5000/video/all/vid?path={{(video$ | async)?.url}}"> -->
                 <!-- <source *ngIf="!(video$|async)?.url" src="../../../../assets/images/video.mp4"> -->
             </video>
-            <!-- <div class="tags" *ngIf="!(video$ | async)?.hashtags">
-                <a>#Coding</a> <a >#HTML</a> <a >#CSS</a> <a>#JavaScript</a>
-            </div> -->
             <div class="tags" *ngIf="(video$ | async)?.hashtags">
                 <a *ngFor="let hash of (video$ | async)?.hashtags">{{hash}} </a>
             </div>
@@ -99,9 +96,9 @@
                             <p>{{comment.content}}</p>
                             <div class="acomment-action">
                                 <img src="../../../../assets/images/like.png" alt="">
-                                <span>244</span>
+                                <span>1810</span>
                                 <img src="../../../../assets/images/dislike.png" alt="">
-                                <span>2</span>
+                                <span>2001</span>
                                 <span id="rep" (click)="replyCmt(i)">REPLY</span>
                                 <a>All replies</a>
                             </div>

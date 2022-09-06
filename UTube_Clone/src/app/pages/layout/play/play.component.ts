@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -18,7 +18,6 @@ import { UnsubDialogComponent } from './components/unsub-dialog/unsub-dialog.com
 import { UserState } from 'src/app/states/user.state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentState } from 'src/app/states/comment.state';
-import { state } from '@angular/animations';
 import { HlsService } from 'src/app/services/hls/hls.service';
 
 @Component({
@@ -26,7 +25,7 @@ import { HlsService } from 'src/app/services/hls/hls.service';
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit, AfterViewInit {
+export class PlayComponent implements OnInit {
 
   source: string = "";
 
@@ -113,8 +112,8 @@ export class PlayComponent implements OnInit, AfterViewInit {
     //get like and dislike at that time video was play
     this.video$.subscribe((value) => {
       if (value.likes != undefined && value.dislikes != undefined && value.url != undefined) {
-
         this.source = `http://127.0.0.1:5000/${value.url}-conv/main.m3u8`
+        // this.source = `http://127.0.0.1:5000/1662479356341-523049444.mp4-conv/main.m3u8`
         let audioControl = document.getElementById('video');
         this.hlsService.hls.loadSource(this.source)
         if (audioControl != null) {
@@ -130,10 +129,6 @@ export class PlayComponent implements OnInit, AfterViewInit {
         console.log(`dislike: ${this.dislikes_temp} - like: ${this.likes_temp}`);
       }
     })
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   async ngOnInit(): Promise<void> {
@@ -289,57 +284,48 @@ export class PlayComponent implements OnInit, AfterViewInit {
   timePlay: number = 0;
   duration: number = 0;
 
-  predictTime(event: any ,videoId: string) {
-    this.duration = event.target.duration;
-    console.log(this.duration);
+  predictTimeToCount(event: any, videoId: string) {
+    this.duration = Math.floor(event.target.duration);
     this.timePlay = Date.now();
-    console.log(`time has played: ${this.totalTime} ms`);
+    console.log(`time has played: ${this.totalTime / 1000} s`);
     if (this.totalTime == 0) {
       this.timeOutId = setTimeout(() => {
-        this.video$.subscribe((video) => {
-          if (video.owner._id != this.userId) {
-            console.log("+1");
-            this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
-            this.isCount = !this.isCount;
-            this.totalTime = 0;
-          }
+        if (this.isCount == false) {
+          this.video$.subscribe((video) => {
+            if (video.owner._id != this.userId) {
+              this.isCount = !this.isCount;
+              console.log("+1");
+              this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
+             
+            }
+          })
         }
-        )
-      }, (this.duration / 2 + 10)*1000)
+      }, (this.duration * 0.6) * 1000)
     }
     if (this.totalTime > 0) {
       this.timeOutId = setTimeout(() => {
-        this.video$.subscribe((video) => {
-          if (video.owner._id != this.userId) {
-            console.log("+1");
-            this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
-            this.isCount = !this.isCount;
-            this.totalTime = 0;
-          }
+        if (this.isCount == false) {
+          this.video$.subscribe((video) => {
+            if (video.owner._id != this.userId) {
+              this.isCount = !this.isCount;
+              console.log("+1");
+              this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
+            }
+          })
         }
-        )
-      },  ((this.duration / 2 + 10)*1000) - (this.totalTime))
+      }, this.duration * 0.6 * 1000 - this.totalTime)
     }
   }
-  plusView(videoId: string) {
-    // console.log(this.isCount)
-    if (this.isCount == false) {
-      this.video$.subscribe((video) => {
-        if (video.owner._id != this.userId) {
-          console.log("+1");
-          this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
-          this.totalTime = 0;
-        }
-      })
-      clearTimeout(this.timeOutId);
-      // this.isCount = !this.isCount;
-    }
+  resetCountable() {
     if (this.isCount == true) {
+      clearTimeout(this.timeOutId);
       this.isCount = !this.isCount;
+      this.totalTime = 0;
+    }else{
+      clearTimeout(this.timeOutId);
       this.totalTime = 0;
     }
   }
-  
   stopCountingTime() {
     clearTimeout(this.timeOutId);
     this.totalTime += Date.now() - this.timePlay;

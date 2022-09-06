@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { mkdir, mkdirSync, rmdirSync, renameSync } from 'fs';
-const imageThumbnail = require('image-thumbnail');
+import { mkdir, mkdirSync, rmdirSync, renameSync, unlinkSync, } from 'fs';
+// const imageThumbnail = require('image-thumbnail');
 const ffmpeg = require('fluent-ffmpeg');
 // const command = ffmpeg();
 // import fs from "fs";
@@ -23,14 +23,13 @@ export class MediaService {
     //   }
     // })
     return new Promise<Express.Multer.File>((resolve, rejects) => {
-      // rmdirSync(`./uploads/vids/${file.filename}`,{recursive:true});
       mkdirSync(`./uploads/vids/cvt/${file.filename}-conv`);
       renameSync(`./uploads/vids/${file.filename}`, `./uploads/vids/cvt/${file.filename}-conv/${file.filename}`);
       ffmpeg()
         .addInput(`./uploads/vids/cvt/${file.filename}-conv/${file.filename}`)
         .output(`./uploads/vids/cvt/${file.filename}-conv/main.m3u8`)
         .outputOptions([
-          '-g 60',
+          // '-g 60',
           '-f hls',
           '-max_muxing_queue_size 1024',
           '-hls_time 2',
@@ -50,20 +49,21 @@ export class MediaService {
         })
         .on('end', function () {
           console.log('Finished processing');
+          unlinkSync(`./uploads/vids/cvt/${file.filename}-conv/${file.filename}`);
           resolve(file);
         })
         .run();
     });
   }
 
-  async cutThumbFromVid(file: Express.Multer.File) {
-    try {
-      let options = { width: 100, height: 100, responseType: 'base64', jpegOptions: { force:true, quality:90 } }
-      const thumbnail = await imageThumbnail(file.path,options);
-      console.log(thumbnail);
-      return thumbnail;
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async cutThumbFromVid(file: Express.Multer.File) {
+  //   try {
+  //     let options = { width: 100, height: 100, responseType: 'base64', jpegOptions: { force:true, quality:90 } }
+  //     const thumbnail = await imageThumbnail(file.path,options);
+  //     console.log(thumbnail);
+  //     return thumbnail;
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 }

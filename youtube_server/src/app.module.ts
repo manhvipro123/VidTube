@@ -11,6 +11,7 @@ import { AuthMiddleware } from './auth/auth.middleware';
 import { MediaModule } from './media/media.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { SuggestionModule } from './suggestion/suggestion.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { join } from 'path';
     VideoModule,
     CommentModule,
     MediaModule,
+    SuggestionModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService],
@@ -30,6 +32,8 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'video/all', method: RequestMethod.GET },
         { path: 'comment/all', method: RequestMethod.GET },
+        { path: 'suggestion/search', method: RequestMethod.GET },
+        // { path: 'suggestion/all', method: RequestMethod.GET },
         // { path: 'video/all/thumb', method: RequestMethod.GET },
         // { path: 'video/all/vid', method: RequestMethod.GET },
         // { path: 'video/one/', method: RequestMethod.GET },

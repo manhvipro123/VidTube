@@ -12,6 +12,7 @@ import { MediaModule } from './media/media.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { SuggestionModule } from './suggestion/suggestion.module';
+import { CloudMessageService } from './cloud-message/cloud-message/cloud-message.service';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { SuggestionModule } from './suggestion/suggestion.module';
     SuggestionModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthService],
+  providers: [AppService, AuthService, CloudMessageService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

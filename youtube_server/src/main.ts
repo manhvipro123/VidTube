@@ -3,13 +3,15 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication} from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import * as admin from 'firebase-admin';
-import { join } from 'path';
+import { initializeApp } from 'firebase-admin';
 
 async function bootstrap() {
 
-  admin.initializeApp({
+
+  const key = admin.initializeApp({
     credential: admin.credential.cert("./admin-firebase.json")
   });
+  admin.messaging(key);
   const sv = 5000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();

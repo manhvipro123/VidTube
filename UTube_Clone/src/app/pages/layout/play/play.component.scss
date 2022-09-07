@@ -20,6 +20,7 @@
 
 .vid-info p{
    margin: 0 0 5px 0;
+   cursor: pointer;
 }
 
 // .vid-info p{
@@ -96,6 +97,11 @@
 .publisher div{
     flex: 1;
     line-height: 18px;;
+}
+
+.publisher div #author-name{
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .publisher img{

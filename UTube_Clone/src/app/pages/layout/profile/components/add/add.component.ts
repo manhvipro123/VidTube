@@ -9,7 +9,6 @@ import { VideoState } from 'src/app/states/video.state';
 import * as VideoActions from '../../../../../actions/video.action';
 import {
   generateVideoThumbnails,
-  importFileandPreview
 } from "@rajesh896/video-thumbnails-generator";
 
 @Component({

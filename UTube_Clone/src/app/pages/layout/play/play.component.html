@@ -26,7 +26,7 @@
                             (click)="dislikeVideo(videoTest._id)">{{dislikes_temp}}</a>
                     <a *ngIf="isDisliked"><img src="../../../../assets/images/disliked.png"
                             (click)="dislikeVideo(videoTest._id)">{{dislikes_temp}}</a>
-                    <a><img src="../../../../assets/images/share.png">Share</a>
+                    <a class="click"><img src="../../../../assets/images/share.png">Share</a>
                     <a><img src="../../../../assets/images/save.png">Save</a>
                 </div>
                 <div *ngIf="!idToken">
@@ -34,7 +34,7 @@
                             (click)="loginToAct()">{{likes_temp}}</a>
                     <a *ngIf="!isDisliked"><img src="../../../../assets/images/dislike.png"
                             (click)="loginToAct()">{{dislikes_temp}}</a>
-                    <a><img src="../../../../assets/images/share.png">Share</a>
+                    <a class="click"><img src="../../../../assets/images/share.png">Share</a>
                     <a><img src="../../../../assets/images/save.png">Save</a>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <div class="publisher" *ngIf="idToken">
                 <img src="{{(video$ | async)?.owner?.photoUrl}}" (error)="handleChannelError($event)">
                 <div>
-                    <div>{{(video$ | async)?.owner?.name}}</div>
+                    <div id="author-name">{{(video$ | async)?.owner?.name}}</div>
                     <span>{{(video$ | async)?.owner?.subscribers}} Subscribers</span>
                 </div>
                 <button *ngIf="!isSubscribe" type="button" style="text-transform: uppercase; font-weight: bold;"

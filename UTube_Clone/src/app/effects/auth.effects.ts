@@ -37,5 +37,16 @@ export class AuthEffects {
         catchError(error => of(AuthActions.getUserIdFailure({ error: error }))),
     ))
 
+    saveRegistTokenEffect = createEffect(() => this.action$.pipe(
+        ofType(AuthActions.saveRegistToken),
+        switchMap((state) => 
+        {
+           return this.httpService.sendUidForm(state.idToken,state.uidForm)
+        }),
+        map((tempList) => {
+            return AuthActions.saveRegistTokenSuccess({tokenList: tempList})
+        }),
+        catchError(error => of(AuthActions.saveRegistTokenFailure({ error: error }))),
+    ))
  
 }

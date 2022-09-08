@@ -18,4 +18,6 @@ export class InteractService {
   listenToggleMenu(callback: (value: any) => void): void {
     this.callbacks.push(callback)
   }
+
+
 }

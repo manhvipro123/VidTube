@@ -7,14 +7,17 @@ import { AuthService } from 'src/auth/auth.service';
 import { UserModule } from 'src/user/user.module';
 import { forwardRef } from '@nestjs/common';
 import { UserSchema } from 'src/models/user.schema';
+import { SuggestionModule } from 'src/suggestion/suggestion.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'video', schema: VideoSchema }],'youtube-clone'),
     MongooseModule.forFeature([{ name: 'user', schema: UserSchema }],'youtube-clone'),    
     forwardRef(() => UserModule),
+    forwardRef(() => SuggestionModule),
   ],
   controllers: [VideoController],
-  providers: [VideoService,AuthService]
+  providers: [VideoService,AuthService],
+  exports: [VideoService]
 })
 export class VideoModule {}

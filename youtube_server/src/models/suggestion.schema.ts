@@ -17,6 +17,9 @@ export class Suggestion {
 
     @Prop()
     dist: number;
+
+    @Prop()
+    video_id: string;
 }
 
 export const SuggestionSchema = SchemaFactory.createForClass(Suggestion);

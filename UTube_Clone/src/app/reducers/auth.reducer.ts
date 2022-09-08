@@ -7,6 +7,7 @@ const inititalState: AuthState = {
     idToken: "",
     error: "",
     _id: "",
+    registrationTokensList: {}
 }
 
 export const authReducer = createReducer(
@@ -77,6 +78,7 @@ export const authReducer = createReducer(
     }),
     on(AuthActions.logoutFailure, (state, action) => {
         let newState = {
+
             ...state,
             error: action.error
         }
@@ -103,6 +105,33 @@ export const authReducer = createReducer(
         return newState;
     }),
     on(AuthActions.getUserIdFailure, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: false,
+            error: action.error
+        }
+        console.log(action.type);
+        return newState;
+    }),
+
+      ////////////////////////////////////////////////////////
+      on(AuthActions.saveRegistToken, (state, action) => {
+        let newState = {
+            ...state,
+        }
+        console.log(action.type);
+        return newState;
+    }),
+    on(AuthActions.saveRegistTokenSuccess, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: true,
+            registrationTokensList: action.tokenList
+        }
+        console.log(action.type,newState.registrationTokensList);
+        return newState;
+    }),
+    on(AuthActions.saveRegistTokenFailure, (state, action) => {
         let newState = {
             ...state,
             isAuthenticated: false,

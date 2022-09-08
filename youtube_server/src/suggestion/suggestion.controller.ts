@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { SuggestionService } from './suggestion.service';
 
 
@@ -13,9 +13,10 @@ export class SuggestionController {
   //   {text: "Toi la tun", id: "4"},
   // ]
   @Get('search')
-  async SearchForSuggestion(@Body() body : any){
+  async SearchForSuggestion(@Query('key') key : string){
+    console.log("Searching... with the title: " + key)
     let data = await this.suggestionService.findAllTitleData();
-    let result = this.suggestionService.search(body.keyword,data);
+    let result = this.suggestionService.search(key,data);
     return result;
   }
 

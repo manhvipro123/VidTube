@@ -1,21 +1,22 @@
 import {
-  Controller, Post, Req, Res, UseInterceptors, UploadedFile, HttpException, HttpStatus,
+  Controller, Post, Req, Res, UseInterceptors, UploadedFile, HttpException, HttpStatus, Param
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { VideoService } from 'src/video/video.service';
 import { MediaService } from './media.service';
 
 @Controller('media')
 export class MediaController {
-  constructor(public mediaService: MediaService) { }
+  constructor(public mediaService: MediaService,public videoService : VideoService) { }
 
   // @Post('test')
   // test() {
   //   return this.mediaService.cutAudio('123');
   // }
 
-  @Post()
+  @Post(':id')
   @UseInterceptors(FileInterceptor('video',
     {
       storage: diskStorage({
@@ -29,9 +30,14 @@ export class MediaController {
       })
     })
   )
-  async create(@UploadedFile() file: Express.Multer.File) {
+  async create(@UploadedFile() file: Express.Multer.File, @Param('id') video_id: string) {
     if (file) {
-      return await this.mediaService.cutVideo(file);
+      let file_inf = await this.mediaService.cutVideo(file);
+      if(file_inf.filename){
+        return await this.videoService.updateVideoInfoWithUrl(video_id,file_inf.filename);
+      }else{
+        return new Object({filename:""});
+      }
     } else {
       throw new HttpException('File is empty', HttpStatus.BAD_REQUEST);
     }

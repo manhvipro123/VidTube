@@ -12,7 +12,7 @@ export class VideoEffects {
 
     getAllVideoInfoEffect = createEffect(() => this.action$.pipe(
         ofType(VideoActions.getAllVideos),
-        switchMap((state) => this.httpService.getAllVideos(state.idToken)),
+        switchMap(() => this.httpService.getAllVideos()),
         map(videoList => {
             videoList.forEach(async video => {
                 let total = new Date().getTime() - new Date(video.createdAt).getTime();
@@ -117,7 +117,7 @@ export class VideoEffects {
         switchMap((action) => {
             const videoFormData: FormData = new FormData();
             videoFormData.append('video', action.videoFile);
-            return this.httpService.uploadVideo(action.idToken,videoFormData)
+            return this.httpService.uploadVideo(action.idToken,videoFormData,action.video_id)
         }),
         map((file) => {
             return VideoActions.uploadVideoSuccess({filePath: file.filename});

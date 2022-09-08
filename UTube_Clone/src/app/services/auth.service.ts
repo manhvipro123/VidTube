@@ -6,9 +6,6 @@ import { AngularFirestore, AngularFirestoreDocument, } from '@angular/fire/compa
 import { BehaviorSubject, from } from 'rxjs';
 import { Router } from '@angular/router';
 import { signInWithPopup, Auth, GoogleAuthProvider, signOut, authState, onAuthStateChanged, getAuth, idToken } from '@angular/fire/auth';
-import { async } from '@firebase/util';
-
-
 
 @Injectable({
   providedIn: 'root'

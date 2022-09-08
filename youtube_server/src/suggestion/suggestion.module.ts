@@ -9,6 +9,7 @@ import { SuggestionSchema } from 'src/models/suggestion.schema';
     MongooseModule.forFeature([{ name: 'suggestion', schema: SuggestionSchema }],'youtube-clone'),
   ],
   controllers: [SuggestionController],
-  providers: [SuggestionService]
+  providers: [SuggestionService],
+  exports: [SuggestionService]
 })
 export class SuggestionModule {}

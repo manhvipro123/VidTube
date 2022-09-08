@@ -10,7 +10,6 @@ const inititalState: VideoState = {
     idToken: "",
     videoLoad: <Video>{},
     _id: "",
-    filePath: "",
     isSuccess: false
 }
 
@@ -23,7 +22,6 @@ export const videoReducer = createReducer(
             ...state,
             videoList: [],
             isLoading: true,
-            idToken: action.idToken,
         }
         // console.log(newState.idToken);
         console.log(action.type)
@@ -70,6 +68,7 @@ export const videoReducer = createReducer(
     }),
     on(VideoActions.loadVideoFailure, (state, action) => {
         let newState = {
+
             ...state,
             isLoading: false,
             error: action.error
@@ -81,6 +80,7 @@ export const videoReducer = createReducer(
     //////////////////////////////////////////////////////////////////
     on(VideoActions.getEntireVideos, (state, action) => {
         let newState = {
+
             ...state,
             isLoading: true,
             _id: action._id
@@ -114,7 +114,7 @@ export const videoReducer = createReducer(
             ...state,
             isLoading: true,
             idToken: action.idToken,
-            videoLoad: action.video
+            isSuccess: false
         }
         console.log(action.type);
         return newState
@@ -124,7 +124,8 @@ export const videoReducer = createReducer(
             ...state,
             idToken: "",
             isLoading: false,
-            isSuccess: true
+            isSuccess: true,
+            videoLoad: action.videoInfo
         }
         console.log(action.type, action.videoInfo);
         return newState
@@ -143,10 +144,11 @@ export const videoReducer = createReducer(
     on(VideoActions.uploadVideo, (state, action) => {
         let newState = {
             ...state,
+            isSuccess: false,
             isLoading: true,
             idToken: action.idToken,
         }
-        console.log(action.type);
+        console.log(action.type,action.video_id);
         return newState
     }),
     on(VideoActions.uploadVideoSuccess, (state, action) => {
@@ -154,7 +156,6 @@ export const videoReducer = createReducer(
             ...state,
             idToken: "",
             isLoading: false,
-            filePath: action.filePath
         }
         console.log(action.type, action.filePath);
         return newState

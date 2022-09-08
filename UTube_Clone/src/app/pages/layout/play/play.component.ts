@@ -27,17 +27,8 @@ import { HlsService } from 'src/app/services/hls/hls.service';
 })
 export class PlayComponent implements OnInit {
 
+  //hls source testing
   source: string = "";
-
-  replyComment: any[] = []
-  replyCmt(i: any) {
-    if (this.replyComment[i] == null || this.replyComment[i] == undefined) {
-      this.replyComment[i] = true
-    } else {
-      this.replyComment[i] = !this.replyComment[i]
-
-    }
-  }
 
   isBtnHide: boolean = true;
   isRepFormHide: boolean = true;
@@ -229,10 +220,27 @@ export class PlayComponent implements OnInit {
     this.isBtnHide = false;
   }
 
+  comment(videoId: string) {
+    this.store.dispatch(CommentActions.WriteComment({ idToken: this.idToken, videoId, comment: this.commentForm.value }));
+    this.commentForm.reset(this.commentForm);
+  }
+
   resetCommentForm() {
     this.commentForm.reset(this.commentForm);
     if (!this.commentForm.valid) {
       this.isBtnHide = true;
+    }
+  }
+
+
+  //comment index
+  replyComment: any[] = []
+  replyCmt(i: any) {
+    if (this.replyComment[i] == null || this.replyComment[i] == undefined) {
+      this.replyComment[i] = true
+    } else {
+      this.replyComment[i] = !this.replyComment[i]
+
     }
   }
 
@@ -244,10 +252,6 @@ export class PlayComponent implements OnInit {
     this.replyCmt(i)
   }
 
-  comment(videoId: string) {
-    this.store.dispatch(CommentActions.WriteComment({ idToken: this.idToken, videoId, comment: this.commentForm.value }));
-    this.commentForm.reset(this.commentForm);
-  }
 
   reply(videoId: string, replyTo: string) {
     let form = this.replyForm.value;
@@ -256,7 +260,7 @@ export class PlayComponent implements OnInit {
       replyTo: replyTo
     }
     this.store.dispatch(CommentActions.WriteComment({ idToken: this.idToken, videoId, comment: newForm }));
-    this.replyForm.reset(this.commentForm);
+    this.replyForm.reset(this.replyForm);
   }
   ////////////////////////////////////////////////////COMMENT /////////////////////////////////////////////////////////////
 
@@ -296,7 +300,7 @@ export class PlayComponent implements OnInit {
               this.isCount = !this.isCount;
               console.log("+1");
               this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
-             
+
             }
           })
         }
@@ -321,7 +325,7 @@ export class PlayComponent implements OnInit {
       clearTimeout(this.timeOutId);
       this.isCount = !this.isCount;
       this.totalTime = 0;
-    }else{
+    } else {
       clearTimeout(this.timeOutId);
       this.totalTime = 0;
     }

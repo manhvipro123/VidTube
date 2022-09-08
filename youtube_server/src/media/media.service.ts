@@ -1,13 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { mkdir, mkdirSync, rmdirSync, renameSync, unlinkSync, } from 'fs';
-// const imageThumbnail = require('image-thumbnail');
 const ffmpeg = require('fluent-ffmpeg');
-// const command = ffmpeg();
-// import fs from "fs";
-// let supportedFiles = ['mp4', 'mov', 'm4v'];
-// const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-// ffmpeg.setFfmpegPath(ffmpegPath);
-
 @Injectable()
 
 export class MediaService {
@@ -47,8 +40,9 @@ export class MediaService {
         .on('progress', function (progress) {
           console.log('Processing: ' + progress.percent + '% done')
         })
-        .on('end', function () {
+        .on('end', async function () {
           console.log('Finished processing');
+         
           unlinkSync(`./uploads/vids/cvt/${file.filename}-conv/${file.filename}`);
           resolve(file);
         })

@@ -42,9 +42,7 @@ export class MainComponent implements OnInit {
     private store: Store<{ video: VideoState, auth: AuthState }>,
     // private auth: Auth
   ) {
-    this.token$.subscribe((token) => {
-        this.store.dispatch(VideoActions.getAllVideos({ idToken: token }));
-    })
+    this.store.dispatch(VideoActions.getAllVideos());
   }
   async ngOnInit(): Promise<void> {
     this.interactService.listenToggleMenu((isCheck) => {

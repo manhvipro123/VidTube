@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Suggestion, SuggestionDocument } from 'src/models/suggestion.schema';
+import { Video } from 'src/models/video.schema';
 
 
 @Injectable()
@@ -15,14 +16,16 @@ export class SuggestionService {
     .select('-__v -updatedAt -createdAt');
   }
 
-  async createTitleData(title: Suggestion){
-    const newSuggestion = new this.suggestionModel(title);
+  async createTitleData(video: any){
+    const newSuggestion = new this.suggestionModel();
+    newSuggestion.title = video.title;
+    newSuggestion.video_id = video._id;
     return await newSuggestion.save();
   }
 
   stringToVect(textInput: string, dict: Array<string>) {
     //remove special character
-    textInput = textInput.replace(/[^\w\s]/gi, '');
+    // textInput = textInput.replace(/[^\w\s]/gi, '');
     //split string to array
     let words = textInput.split(" ").map((w) => w.toLowerCase());
     let vec = [];
@@ -53,22 +56,22 @@ export class SuggestionService {
         vec2[0].push(0);
       }
     }
-    console.log(vec1[0].length,vec2[0].length)
+    // console.log(vec1[0].length,vec2[0].length)
     // console.log(vec1,vec2);
     for (let i = 0; i < vec1[0].length; i++) {
       dist += Math.pow(Number(vec1[0][i]) - Number(vec2[0][i]), 2);
     }
-    console.log("pow: " + dist);
+    // console.log("pow: " + dist);
     return Math.sqrt(dist);
   }
 
   search(keywords: string, data: any) {
     let dict = [];
     let vecSearch = this.stringToVect(keywords, dict);
-    console.log(vecSearch);
+    // console.log(vecSearch);
     for (let i = 0; i < data.length; i++) {
       data[i].vec = this.stringToVect(data[i].title, dict);
-      console.log(data[i].vec)
+      // console.log(data[i].vec)
     }
  
     //calc distance

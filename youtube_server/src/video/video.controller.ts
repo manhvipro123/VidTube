@@ -25,11 +25,12 @@ import { diskStorage } from 'multer';
 import { extname, join } from 'path';
 import { AuthService } from 'src/auth/auth.service';
 import { Video } from 'src/models/video.schema';
+import { SuggestionService } from 'src/suggestion/suggestion.service';
 import { VideoService } from './video.service';
 
 @Controller('video')
 export class VideoController {
-  constructor(private readonly videoService: VideoService, private authService: AuthService) { }
+  constructor(private readonly videoService: VideoService, private authService: AuthService, private suggestionService: SuggestionService) { }
 
   // @Post('upload/thumb')
   // @UseInterceptors(FileInterceptor('thumbnail',
@@ -78,12 +79,13 @@ export class VideoController {
   }
 
   @Post()
-  addVideo(@Body() video: Video, @Req() req: any) {
-    return this.videoService.createVideoInfo(video, req.user);
+  async addVideo(@Body() video: Video, @Req() req: any) {
+    return await this.videoService.createVideoInfo(video, req.user);
   }
 
   @Get('all/vid')
   getVideoFile(@Query('path') path: any) {
+
     const file = createReadStream(join(process.cwd(), path));
     console.log(`video was played in this "${file.path}" path`);
     return new StreamableFile(file);

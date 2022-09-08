@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Comment } from '../models/comment.model';
+import { Suggestion } from '../models/suggestion.model';
 import { User } from '../models/user.model';
 import { Video } from '../models/video.model';
 
@@ -40,6 +41,9 @@ export class HttpService {
     return this.http.put<User>('http://127.0.0.1:5000/user/unsubscribe/' + `${_id}`, '', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
 
+  sendUidForm(idToken:string,uidForm: any){
+    return this.http.post('http://127.0.0.1:5000/cloud/save',uidForm,{ headers: new HttpHeaders({ 'Authorization': `${idToken}` }) })
+  }
 
   //-------------------------------------------Video----------------------------------------------------------------///
   public addThumb(idToken: string, thumbForm: any) {
@@ -71,16 +75,16 @@ export class HttpService {
   }
 
   //bản HLSSSSSSS
-  public uploadVideo(idToken: string, videoForm: any): Observable<any> {
-    return this.http.post('http://127.0.0.1:5000/media', videoForm, { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) })
+  public uploadVideo(idToken: string, videoForm: any, video_id: string): Observable<any> {
+    return this.http.post('http://127.0.0.1:5000/media/' + `${video_id}`, videoForm, { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) })
   }
 
   public createVideoInfo(idToken: string, infoForm: any) {
     return this.http.post<Video>('http://127.0.0.1:5000/video', infoForm, { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
 
-  getAllVideos(idToken: string) {
-    return this.http.get<Video[]>('http://127.0.0.1:5000/video/all', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
+  getAllVideos() {
+    return this.http.get<Video[]>('http://127.0.0.1:5000/video/all');
   }
 
   getAllVideosExceptUser(idToken: string) {
@@ -122,6 +126,11 @@ export class HttpService {
 
   getAllCommentsFromThatVideo(id: string): Observable<Comment[]> {
     return this.http.get<Comment[]>('http://127.0.0.1:5000/comment/all/' + `${id}`);
+  }
+
+  ///////////////////////////////////////////////////////////////SUGGESTIONS??///////////////////////////////////////////////////////////////////////////////////
+  searching(keyword: string): Observable<Suggestion[]>{
+    return this.http.get<Suggestion[]>('http://127.0.0.1:5000/suggestion/search?key='+`${keyword}`);
   }
 
 }

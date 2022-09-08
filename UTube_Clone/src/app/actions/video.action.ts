@@ -1,7 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { Video } from "../models/video.model";
 
-export const getAllVideos = createAction('[Video] Get All Videos', props<{ idToken: string }>());
+export const getAllVideos = createAction('[Video] Get All Videos');
 export const getAllVideosSuccess = createAction('[Video] Get All Videos Success', props<{ videoList: Video[] }>());
 export const getAllVideosFailure = createAction('[Video] Get All Videos Failure', props<{ error: string }>());
 
@@ -13,7 +13,7 @@ export const getEntireVideos = createAction('[Video] Get Entire Videos', props<{
 export const getEntireVideosSuccess = createAction('[Video] Get Entire Videos Success', props<{ videoList: Video[] }>());
 export const getEntireVideosFailure = createAction('[Video] Get Entire Videos Failure', props<{ error: string }>());
 
-export const uploadVideo = createAction('[Video] Upload Video', props<{ idToken: string, videoFile : File }>());
+export const uploadVideo = createAction('[Video] Upload Video', props<{ idToken: string, videoFile : File, video_id: string }>());
 export const uploadVideoSuccess = createAction('[Video]  Upload Video Success', props<{ filePath : string }>());
 export const uploadVideoFailure = createAction('[Video]  Upload Video Failure', props<{ error: string }>());
 

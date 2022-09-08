@@ -9,7 +9,6 @@ export type VideoDocument = Video & Document;
 )
 export class Video {
 
-    @IsNotEmpty()
     @Prop()
     url: string;
 

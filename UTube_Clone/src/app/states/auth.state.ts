@@ -3,4 +3,5 @@ export interface AuthState{
     idToken: string;
     error: string;
     _id: string;
+    registrationTokensList: Object
 }

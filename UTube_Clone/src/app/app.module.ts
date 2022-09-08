@@ -35,6 +35,8 @@ import { UserEffects } from './effects/user.effects';
 import { userReducer } from './reducers/user.reducer';
 import { commentReducer } from './reducers/comment.reducer';
 import { CommentEffects } from './effects/comment.effects';
+import { suggestionReducer } from './reducers/suggestion.reducer';
+import { SuggestionEffects } from './effects/suggestion.effect';
 
 @NgModule({
   declarations: [
@@ -54,13 +56,13 @@ import { CommentEffects } from './effects/comment.effects';
     provideFirestore(() => getFirestore()),
     provideMessaging(() => getMessaging()),
     provideStorage(() => getStorage()),
-    StoreModule.forRoot({ auth: authReducer, video: videoReducer, user: userReducer, cmt: commentReducer }, {}),
+    StoreModule.forRoot({ auth: authReducer, video: videoReducer, user: userReducer, cmt: commentReducer, suggest : suggestionReducer }, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
       autoPause: true, // Pauses recording actions and state changes when the extension window is not open
     }),
-    EffectsModule.forRoot([AuthEffects, VideoEffects, UserEffects, CommentEffects]),
+    EffectsModule.forRoot([AuthEffects, VideoEffects, UserEffects, CommentEffects, SuggestionEffects]),
     HttpClientModule,
     
 
@@ -81,7 +83,7 @@ export class AppModule {
     ) {
       this.store.dispatch(AuthActions.getIdToken());
       this.idToken$.subscribe((idToken) => {
-        if(idToken){
+        if(idToken && idToken != ""){
           this.store.dispatch(AuthActions.getUserId({ idToken: idToken }))
         }
       })

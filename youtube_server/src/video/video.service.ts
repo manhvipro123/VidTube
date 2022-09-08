@@ -3,13 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/models/user.schema';
 import { Video, VideoDocument } from 'src/models/video.schema';
+import { SuggestionService } from 'src/suggestion/suggestion.service';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class VideoService {
   constructor(
     private userService: UserService,
-
+    private suggestionService : SuggestionService,
     @InjectModel('video', 'youtube-clone') private videoModel: Model<VideoDocument>,
     @InjectModel('user', 'youtube-clone') private userModel: Model<UserDocument>,
   ) { }
@@ -22,12 +23,26 @@ export class VideoService {
       }).exec();
       newVideo.owner = user_Indb._id;
       const _video = await newVideo.save();
+      await this.suggestionService.createTitleData(_video);
       // this.userModel.
       //   findByIdAndUpdate(
       //     user_Indb._id, { ...user_Indb, videoList: [...user_Indb.videoList, _video._id] }
       //   ).exec();
       return _video;
     } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async updateVideoInfoWithUrl(video_id:string,path:string){
+    try{
+      const update_Video = await this.videoModel.findOne({
+        _id : video_id
+      }).exec();
+      update_Video.url = path;
+      update_Video.isHidden = false;
+      return await update_Video.save();
+    }catch(err){
       console.log(err);
     }
   }

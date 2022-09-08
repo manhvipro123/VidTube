@@ -10,6 +10,7 @@ import * as VideoActions from '../../../../../actions/video.action';
 import {
   generateVideoThumbnails,
 } from "@rajesh896/video-thumbnails-generator";
+import { Video } from 'src/app/models/video.model';
 
 @Component({
   selector: 'app-add',
@@ -18,15 +19,15 @@ import {
 })
 export class AddComponent implements OnInit {
 
+
   isEmpty: boolean = false;
 
-  videoPath$ = this.store.select((state) => state.video.filePath);
-  videoInfo$ = this.store.select((state) => state.video.isSuccess);
+  isvideoInfoCreate$ = this.store.select((state) => state.video);
 
   videoFiles: File[] = [];
   imageFiles: File[] = [];
   testImageFiles: string[] = [];
-  
+
   idToken$ = this.store.select((state) => state.auth.idToken);
   token: string = "";
   videoUploadForm !: FormGroup;
@@ -37,7 +38,6 @@ export class AddComponent implements OnInit {
     private fb: FormBuilder,
     private _snackBar: MatSnackBar,
     // private authService: AuthService,
-    private httpService: HttpService,
     private uploadService: UploadService,
     // private auth: Auth,
     private store: Store<{ video: VideoState, auth: AuthState }>
@@ -58,46 +58,13 @@ export class AddComponent implements OnInit {
       hashtags: [''],
     });
 
-    this.videoPath$.subscribe(async value => {
-      if (value) {
-        let thumbUrl = await this.uploadService.uploadImage(this.imageFiles[0]);
-        let hashtags = [];
-        let videoPath = value;
-        // videoFormData.append('video', this.videoFiles[0]);
-        // let videoPath = await this.httpService.addVideo(this.token, videoFormData);
-        // thumbFormData.append('thumbnail', this.imageFiles[0]);
-        // let imagePath = await this.httpService.addThumb(this.token, thumbFormData);
 
-        let form = this.videoUploadForm.value;
-        let description = form.description.replace(/\n/g, "<br>");
-        // console.log(description);
 
-        if (form.hashtags) {
-          // console.log(form.hashtags);
-          hashtags = form.hashtags.trim();
-          hashtags = hashtags.split(" ");
-          console.log(hashtags);
-        }
-
-        let newForm = {
-          ...form,
-          description: description,
-          url: videoPath,
-          photoURL: thumbUrl,
-          hashtags: hashtags
-        }
-
-        // console.log(newForm);
-        // let video = await this.httpService.createVideoInfo(this.token, newForm);
-        // console.log(video);\
-        this.store.dispatch(VideoActions.createVideoInfo({ idToken: this.token, video: newForm }))
-      }
-    })
-
-    this.videoInfo$.subscribe(value => {
-      if (value == true) {
+    this.isvideoInfoCreate$.subscribe(value => {
+      if (value.isSuccess == true) {
+        this.store.dispatch(VideoActions.uploadVideo({ idToken: this.token, videoFile: this.videoFiles[0] , video_id: value.videoLoad._id}))
         this.showSpinner = false;
-        this._snackBar.open("Upload successful!!!", "close", {
+        this._snackBar.open("Upload is processing,", "close", {
           duration: 3000,
           horizontalPosition: 'left',
           verticalPosition: 'bottom',
@@ -105,8 +72,6 @@ export class AddComponent implements OnInit {
         this.resetForm();
       }
     })
-
-
   }
 
   resetForm() {
@@ -120,8 +85,40 @@ export class AddComponent implements OnInit {
     // const videoFormData: FormData = new FormData();
     // const thumbFormData: FormData = new FormData();
     if (this.videoFiles[0] && this.imageFiles[0]) {
-      this.store.dispatch(VideoActions.uploadVideo({ idToken: this.token, videoFile: this.videoFiles[0] }))
-      this.showSpinner = true
+      this.showSpinner = true;
+      let thumbUrl = await this.uploadService.uploadImage(this.imageFiles[0]);
+      let hashtags = [];
+      // let videoPath = value;
+      // videoFormData.append('video', this.videoFiles[0]);
+      // let videoPath = await this.httpService.addVideo(this.token, videoFormData);
+      // thumbFormData.append('thumbnail', this.imageFiles[0]);
+      // let imagePath = await this.httpService.addThumb(this.token, thumbFormData);
+
+      let form = this.videoUploadForm.value;
+      let description = form.description.replace(/\n/g, "<br>");
+      // console.log(description);
+
+      if (form.hashtags) {
+        // console.log(form.hashtags);
+        hashtags = form.hashtags.trim();
+        hashtags = hashtags.split(" ");
+        console.log(hashtags);
+      }
+
+      let newForm : Video = {
+        ...form,
+        description: description,
+        // url: videoPath,
+        photoURL: thumbUrl,
+        hashtags: hashtags,
+        isHidden: true,
+      }
+
+      // console.log(newForm);
+      // let video = await this.httpService.createVideoInfo(this.token, newForm);
+      // console.log(video);\
+      this.store.dispatch(VideoActions.createVideoInfo({ idToken: this.token, video: newForm }))
+      
     } else {
       alert('Files are emptied');
       return
@@ -174,12 +171,12 @@ export class AddComponent implements OnInit {
     this.imageFiles.splice(this.imageFiles.indexOf(event), 1);
   }
 
-  convertThumb(){
+  convertThumb() {
     let videoFile = this.videoFiles[0];
-    generateVideoThumbnails(videoFile, 2,'jpg').then((thumbnailArray: string[]) => {
+    generateVideoThumbnails(videoFile, 2, 'jpg').then((thumbnailArray: string[]) => {
       // output will be arry of base64 Images
       // example - ["img1", "imgN"]
-      
+
       // let convertedFiles = thumbnailArray.map((fileBase64, index) => {
       //   let fileType = fileBase64.substring(
       //     fileBase64.indexOf(":") + 1,
@@ -191,17 +188,17 @@ export class AddComponent implements OnInit {
       // });
       // console.log(convertedFiles);
       // console.log(thumbnailArray);
-      
+
       this.testImageFiles = thumbnailArray;
       this.isEmpty = false;
       return thumbnailArray;
       // @todo - implement your logic here
-    }).catch ((err: any) => {
+    }).catch((err: any) => {
       console.error(err);
     })
-  
+
   }
- 
+
 
 
   //***************************** 

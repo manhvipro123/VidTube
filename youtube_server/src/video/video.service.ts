@@ -6,7 +6,7 @@ import { UserDocument } from 'src/models/user.schema';
 import { Video, VideoDocument } from 'src/models/video.schema';
 import { SuggestionService } from 'src/suggestion/suggestion.service';
 import { UserService } from 'src/user/user.service';
-import { rmdirSync } from 'fs';
+import { rmdirSync, rmSync } from 'fs';
 
 @Injectable()
 export class VideoService {
@@ -241,7 +241,7 @@ export class VideoService {
   
   async deleteVideo(id: string,path:string) {
     try{
-      rmdirSync(`./uploads/vids/cvt/${path}-conv`, { recursive: true});
+      rmSync(`./uploads/vids/cvt/${path}-conv`, { recursive: true, force: true});
       await this.suggestionService.deleteTitleData(id);
       await this.commentService.deleteAllCommentFromVid(id);
       const isSucces = await this.videoModel.findOneAndDelete({ _id: id });

@@ -31,6 +31,7 @@ export class MediaController {
     })
   )
   async create(@UploadedFile() file: Express.Multer.File, @Param('id') video_id: string) {
+    console.log('start convert video to m3u8');
     if (file) {
       let file_inf = await this.mediaService.cutVideo(file);
       if(file_inf.filename){

@@ -1,13 +1,15 @@
 import { createReducer, on } from "@ngrx/store";
 import { AuthState } from "../states/auth.state";
 import * as AuthActions from "../actions/auth.action"
+import { User } from "../models/user.model";
 
 const inititalState: AuthState = {
     isAuthenticated: false,
     idToken: "",
     error: "",
     _id: "",
-    registrationTokensList: {}
+    registrationTokensList: {},
+    user: <User>{}
 }
 
 export const authReducer = createReducer(
@@ -67,11 +69,12 @@ export const authReducer = createReducer(
     }),
     on(AuthActions.logoutSuccess, (state, action) => {
         let newState = {
-            
+
             ...state,
             idToken: "",
             isAuthenticated: false,
-            _id: ""
+            _id: "",
+            user: <User>{}
         }
         console.log(action.type);
         return newState;
@@ -114,8 +117,8 @@ export const authReducer = createReducer(
         return newState;
     }),
 
-      ////////////////////////////////////////////////////////
-      on(AuthActions.saveRegistToken, (state, action) => {
+    ////////////////////////////////////////////////////////
+    on(AuthActions.saveRegistToken, (state, action) => {
         let newState = {
             ...state,
         }
@@ -128,7 +131,7 @@ export const authReducer = createReducer(
             isAuthenticated: true,
             registrationTokensList: action.tokenList
         }
-        console.log(action.type,newState.registrationTokensList);
+        console.log(action.type);
         return newState;
     }),
     on(AuthActions.saveRegistTokenFailure, (state, action) => {
@@ -141,5 +144,35 @@ export const authReducer = createReducer(
         return newState;
     }),
 
-   
+    ////////////////////////////////////////////////////
+    on(AuthActions.getUserInfo, (state, action) => {
+        console.log(action.type);
+        let newState = {
+            ...state,
+            idToken: action.idToken,
+            isAuthenticated: false,
+            user: <User>{}
+        };
+        return newState
+    }),
+    on(AuthActions.getUserInfoSuccess, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: true,
+            user: action.user
+        }
+        console.log(action.type);
+        return newState;
+    }), on(AuthActions.getUserInfoFailure, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: false,
+            error: action.error,
+            user: <User>{}
+        }
+        console.log(newState);
+        return state;
+    }),
+
+
 )

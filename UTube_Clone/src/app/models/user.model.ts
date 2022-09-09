@@ -6,6 +6,6 @@ export interface User {
     name: string;
     photoUrl: string;
     subscribers: number;
-    subscriberList: string[];
+    subscriberList: any[];
     videoList: Video[];
  }

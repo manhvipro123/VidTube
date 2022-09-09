@@ -42,7 +42,7 @@ export class AppModule implements NestModule {
         // { path: 'video/entire/', method: RequestMethod.GET },
         // { path: 'video/views/', method: RequestMethod.PUT },
         'comment/all/(.*)',
-        'video/all/(.*)',
+        // 'video/all/(.*)',
         'video/one/(.*)',
         'video/entire/(.*)',
         'video/views/(.*)',

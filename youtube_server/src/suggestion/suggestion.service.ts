@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Suggestion, SuggestionDocument } from 'src/models/suggestion.schema';
-import { Video } from 'src/models/video.schema';
 
 
 @Injectable()

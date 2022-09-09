@@ -321,12 +321,26 @@ a {
 
 .video-title {
     color: var(--black-text);
+    height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.video-meta-data,
+.video-meta-data{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
 .video-description {
     font-size: 1rem;
     font-weight: 400;
+    white-space: nowrap; 
+    width: 500px; 
+    height: 170px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-overflow: ellipsis; 
 }
 
 .video-description {
@@ -357,6 +371,7 @@ a {
 }
 
 .featured-video .video-info {
+    width: 500px;
     flex: 1;
 }
 

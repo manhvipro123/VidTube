@@ -110,7 +110,7 @@ export class PlayComponent implements OnInit {
         if (audioControl != null) {
           this.hlsService.hls.attachMedia(audioControl as HTMLMediaElement)
         }
-        console.log(this.source);
+        // console.log(this.source);
 
         this.author = value.owner;
         this.likes_temp = value.likes;

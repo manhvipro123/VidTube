@@ -27,21 +27,12 @@
         <hr>
         <div class="subscribed-list">
             <h3>SUBSCRIBED</h3>
-            <a><img src="../../../assets/images/Jack.png" alt="user">
-                <p>Jack Nicholson</p>
+            <a *ngFor="let subUser of (userInfo$ | async)?.subscriberList">
+                <img src="{{subUser.photoUrl}}" (error)="handleError($event)">
+                <p *ngIf="(userId$ | async) != subUser._id">{{subUser.name}}</p>
+                <p *ngIf="(userId$ | async) == subUser._id">{{subUser.name}}(Me)</p>
             </a>
-            <a><img src="../../../assets/images/Trong.jpg" alt="user">
-                <p>Trong99-PC</p>
-            </a>
-            <a><img src="../../../assets/images/Kiet.jpg" alt="user">
-                <p>Ambrose-NTK</p>
-            </a>
-            <a><img src="../../../assets/images/megan.png" alt="user">
-                <p>Megan Ryan</p>
-            </a>
-            <a><img src="../../../assets/images/cameron.png" alt="user">
-                <p>Cameron Diaz</p>
-            </a>
+       
         </div>
     </div>
 </div>
@@ -75,20 +66,9 @@
             <hr>
             <div class="subscribed-list">
                 <h3>SUBSCRIBED</h3>
-                <a><img src="../../../assets/images/Jack.png" alt="user">
-                    <p>Jack Nicholson</p>
-                </a>
-                <a><img src="../../../assets/images/Trong.jpg" alt="user">
-                    <p>Trong99-PC</p>
-                </a>
-                <a><img src="../../../assets/images/Kiet.jpg" alt="user">
-                    <p>Ambrose-NTK</p>
-                </a>
-                <a><img src="../../../assets/images/megan.png" alt="user">
-                    <p>Megan Ryan</p>
-                </a>
-                <a><img src="../../../assets/images/cameron.png" alt="user">
-                    <p>Cameron Diaz</p>
+                <a *ngFor="let subUser of (userInfo$ | async)?.subscriberList">
+                    <img src="{{subUser.photoUrl}}" alt="user">
+                    <p>{{subUser.name}}</p>
                 </a>
             </div>
         </div>

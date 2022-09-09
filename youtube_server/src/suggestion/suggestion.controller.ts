@@ -6,12 +6,7 @@ import { SuggestionService } from './suggestion.service';
 export class SuggestionController {
   constructor(private readonly suggestionService: SuggestionService) {
   }
-  // data = [
-  //   {text: "Hello, toi la teo", id: "1"},
-  //   {text: "OMG, toi la ai", id: "2"},
-  //   {text: "Chao, toi la teo", id: "3"},
-  //   {text: "Toi la tun", id: "4"},
-  // ]
+
   @Get('search')
   async SearchForSuggestion(@Query('key') key : string){
     console.log("Searching... with the title: " + key)

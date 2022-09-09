@@ -96,12 +96,21 @@ export class VideoController {
     return this.videoService.findAllVideoInfo();
   }
 
+  // @Get('all/user')
+  // async getAllVideosInfoExceptUser(@Headers('Authorization') idToken: string) {
+  //   let verifiedToken = await this.authService.verifyToken(idToken);
+  //   // return verifiedToken;
+  //   return this.videoService.findAllVideoInfoExceptUser(verifiedToken);
+  // }
+
   @Get('all/user')
-  async getAllVideosInfoExceptUser(@Headers('Authorization') idToken: string) {
-    let verifiedToken = await this.authService.verifyToken(idToken);
+  async getAllVideosInfoOftUser(@Req() req: any) {
+    // let verifiedToken = await this.authService.verifyToken(idToken);
     // return verifiedToken;
-    return this.videoService.findAllVideoInfoExceptUser(verifiedToken);
+    console.log(`user with email: ${req.user.email} was just go to their channel`)
+    return this.videoService.findAllVideoInfosForUser(req.user);
   }
+
 
   @Get('one/:id')
   getOneVideoInfo(@Param('id') id: string) {

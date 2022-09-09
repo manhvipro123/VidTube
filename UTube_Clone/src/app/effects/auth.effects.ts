@@ -48,5 +48,12 @@ export class AuthEffects {
         }),
         catchError(error => of(AuthActions.saveRegistTokenFailure({ error: error }))),
     ))
+
+    getUserInfoEffect = createEffect(() => this.action$.pipe(
+        ofType(AuthActions.getUserInfo),
+        switchMap((state) => this.httpService.getUserInfo(state.idToken)),
+        map((user) => AuthActions.getUserInfoSuccess({ user })),
+        catchError(error => of(AuthActions.getUserInfoFailure({ error: error }))),
+    ))
  
 }

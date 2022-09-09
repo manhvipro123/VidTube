@@ -30,7 +30,7 @@ export class UserService {
     return this.userModel.find({});
   }
 
-  async findOne(email: string) {
+  async findUserId(email: string) {
     try {
       if (email) {
         const user = await this.userModel.findOne({
@@ -85,6 +85,17 @@ export class UserService {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  findOneUser(email:string){
+    try{
+      return this.userModel
+      .findOne({email})
+      .populate('subscriberList', '_id name photoUrl', this.userModel)
+    }catch(err){
+      console.log(err);
+    }
+
   }
 
 }

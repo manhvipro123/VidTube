@@ -30,21 +30,21 @@
 
         <div class="channel-icon">
 
-            <img src="../../../../../../assets/images/kien.png" alt="ava">
+            <img src="{{(author$ | async)?.photoUrl}}" (error)="handleError($event)">
 
         </div>
 
         <div class="channel-title">
 
-            <h1>Văn Hữu Gia Kiên <i class="fas fa-check-circle"></i></h1>
+            <h1>{{(author$ | async)?.name}} <i class="fas fa-check-circle"></i></h1>
 
-            <div class="channel-subscriber-count">0,000,001 subscribers</div>
+            <div class="channel-subscriber-count">{{(author$ | async)?.subscribers}} subscribers</div>
 
         </div>
 
         <div class="channel-subscribe">
 
-            <button class="subscribe-btn btn">Subscribed 0.001m</button>
+            <button class="subscribe-btn btn">Subscribed</button>
 
             <button class="notification-btn btn" aria-label="Enable Notifications"><i class="fas fa-bell"
                     aria-hidden="true"></i></button>
@@ -106,181 +106,51 @@
         <!-- Channel videos -->
         <section class="channel-videos">
 
-            <div class="featured-video">
+            <div class="featured-video" *ngFor="let vid of videoList$ | async ; let i = index">
 
-                <div class="video-thumbnail">
-                    <img src="https://images.unsplash.com/photo-1506960002266-9cebbf4e9549?w=246&h=140&fit=crop" alt="">
+                <div class="video-thumbnail" *ngIf="i == 0" (click)="playVideo(vid._id)">
+                    <img src="{{vid.photoURL}}">
                 </div>
 
-                <div class="video-info">
-                    <h3 class="video-title">Really Cool Vlog 8</h3>
+                <div class="video-info" *ngIf="i == 0">
+                    <h3 class="video-title">{{vid.title}}</h3>
                     <ul class="video-meta-data">
-                        <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                        <li class="video-views">252K views</li>
-                        <li class="video-upload-date">1 day ago</li>
+                        <li class="video-creator">{{vid.owner.name}} <i class="fas fa-check-circle"></i></li>
+                        <li class="video-views">{{vid.owner.subscribers}} views</li>
+                        <li class="video-upload-date">{{vid.timeConvert}}</li>
                     </ul>
-                    <p class="video-description">Another installment of the really cool vlog. Please like and share the
-                        video. Subscribe and activate notifications so you never miss an upload. Follow on social media
-                        etc.</p>
+                    <p class="video-description" [innerHtml]="vid.description"></p>
                 </div>
 
             </div>
 
             <div class="vlogs-playlist playlist">
 
-                <h2 class="playlist-title">Really Cool Vlogs</h2>
+                <h2 class="playlist-title">My Videos</h2>
 
                 <div class="playlist-videos">
 
-                    <div class="playlist-video" tabindex="0">
+                    <div class="playlist-video" tabindex="0" *ngFor="let vid of videoList$ | async" (click)="playVideo(vid._id)">
 
                         <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1506960002266-9cebbf4e9549?w=210&h=118&fit=crop"
-                                alt="">
+                            <img src="{{vid.photoURL}}">
                         </div>
 
                         <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 8</h3>
+                            <h3 class="video-title">{{vid.title}}</h3>
                             <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">252K views</li>
-                                <li class="video-upload-date">1 day ago</li>
+                                <li class="video-creator">{{vid.owner.name}} <i class="fas fa-check-circle"></i></li>
+                                <li class="video-views">{{vid.views}} views</li>
+                                <li class="video-upload-date">{{vid.timeConvert}}</li>
                             </ul>
                         </div>
-
                     </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1499364615650-ec38552f4f34?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 7</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">376K views</li>
-                                <li class="video-upload-date">4 days ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1477466535227-9f581b3eec21?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 6</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">441K views</li>
-                                <li class="video-upload-date">1 week ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1481241857164-e8483bce922d?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 5</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">564K views</li>
-                                <li class="video-upload-date">1 week ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1496317556649-f930d733eea3?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 4</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">689K views</li>
-                                <li class="video-upload-date">2 weeks ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1515164084382-4ac60f929e06?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 3</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">763K views</li>
-                                <li class="video-upload-date">2 weeks ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1455657255576-9f8594457f6b?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 2</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">824K views</li>
-                                <li class="video-upload-date">3 weeks ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="playlist-video" tabindex="0">
-
-                        <div class="video-thumbnail">
-                            <img src="https://images.unsplash.com/photo-1496337589254-7e19d01cec44?w=210&h=118&fit=crop"
-                                alt="">
-                        </div>
-
-                        <div class="video-info">
-                            <h3 class="video-title">Really Cool Vlog 1</h3>
-                            <ul class="video-meta-data">
-                                <li class="video-creator">ReallyCoolVlogs <i class="fas fa-check-circle"></i></li>
-                                <li class="video-views">1.1M views</li>
-                                <li class="video-upload-date">1 month ago</li>
-                            </ul>
-                        </div>
-
-                    </div>
-
                 </div>
-
             </div>
 
-            <div class="collabs-playlist playlist">
+
+            <!-- not done yet -->
+            <!-- <div class="collabs-playlist playlist">
 
                 <h2 class="playlist-title">Really Cool Collabs</h2>
 
@@ -514,7 +384,7 @@
 
                 </div>
 
-            </div>
+            </div> -->
 
         </section>
 

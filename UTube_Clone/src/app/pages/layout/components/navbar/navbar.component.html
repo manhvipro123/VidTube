@@ -1,12 +1,12 @@
 <nav class="flex-div">
     <div class="nav-left flex-div">
         <img src="../../../assets/images/menu.png" alt="menu icon" class="menu-icon" (click)="turnMenu()">
-        <img src="../../../assets/images/logo.png" alt="logo icon" class="logo" [routerLink]="'./'">
+        <img src="../../../../../assets/images/LogoFireV.png" alt="logo icon" class="logo" [routerLink]="'./'">
     </div>
-    <div class="nav-middle flex-div" style="flex-direction: column">
+    <div class="nav-middle flex-div" style="flex-direction: column"  (blur)="resultShow = false">
         <!-- <div>{{idToken$ | async}}</div> -->
         <div class="search-box flex-div">
-            <input type="text" placeholder="Search" (keyup)="onFilterTextChanged($event)" (blur)="resultShow = false" (focus)="resultShow = true">
+            <input type="text" placeholder="Search" (keyup)="onFilterTextChanged($event)" (focus)="resultShow = true">
             <img src="../../../assets/images/search.png" alt="search-icon" >
            
         </div>
@@ -23,11 +23,11 @@
         <img src="../../../assets/images/more.png" alt="more-icon">
         <img src="../../../assets/images/notification.png" alt="nofi-icon">
 
-        <div class="action" clickOutside (clickOutside)="clickedOutside()">
+        <div class="action"  >
             <div class="profile" *ngIf="!displayName">
                 <img src="../../../../../../../assets/images/user.png" alt="ava" class="user-icon" (click)="login()">
             </div>
-            <div class="profile" *ngIf="displayName">
+            <div class="profile" *ngIf="displayName" >
                 <img (error)="handleError($event)" src="{{photoURL}}" alt="ava" class="user-icon"
                     (click)="toggleShow()">
             </div>

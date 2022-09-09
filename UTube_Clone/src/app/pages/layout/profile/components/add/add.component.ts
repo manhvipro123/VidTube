@@ -20,7 +20,7 @@ import { Video } from 'src/app/models/video.model';
 export class AddComponent implements OnInit {
 
 
-  isEmpty: boolean = false;
+  isEmpty: boolean = true;
 
   isvideoInfoCreate$ = this.store.select((state) => state.video);
 

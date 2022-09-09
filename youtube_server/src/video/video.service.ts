@@ -62,7 +62,7 @@ export class VideoService {
   async findAllVideoInfoExceptUser(user: any) {
     try {
       if (user) {
-        const id = await this.userService.findOne(user.email);
+        const id = await this.userService.findUserId(user.email);
         return this.videoModel
           .find({ owner: { $ne: Object(id) } })
           .select('-url -likes -dislikes -description -comments')
@@ -79,7 +79,7 @@ export class VideoService {
   async findOneVideoInfo(_id: string) {
     try {
       return await this.videoModel
-        .findOne({ _id: _id })
+        .findOne({ _id: _id})
         .populate('owner', '_id name photoUrl subscriberList subscribers', this.userModel);
     } catch (err) {
       console.log(err);
@@ -89,7 +89,7 @@ export class VideoService {
   async findEntireVideoInfo(_id: string) {
     try {
       return await this.videoModel
-        .find({ _id: { $nin: [Object(_id)] } })
+        .find({ _id: { $nin: [Object(_id)] },isHidden: false })
         .select('-url -likes -dislikes -description -comments')
         .populate('owner', '_id name photoUrl', this.userModel)
         .sort({ createdAt: -1 });
@@ -211,6 +211,24 @@ export class VideoService {
 
       const newVid = await video.save();
       return newVid;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
+  async findAllVideoInfosForUser(user: any) {
+    try {
+      if (user) {
+        const id = await this.userService.findUserId(user.email);
+        return this.videoModel
+          .find({ owner:  Object(id) })
+          .select('-url -likes -dislikes -comments')
+          .populate('owner', '_id name photoUrl subscribers', this.userModel)
+          .sort({ createdAt: -1 });
+      }else{
+        return ;
+      } 
     } catch (err) {
       console.log(err);
     }

@@ -114,6 +114,18 @@
 //     font-weight: 700;
 //     color: #38424c;
 // }
+
+
+// .upload-card {
+//     display: flex;
+//     flex-direction: column;
+//     flex-wrap: wrap;
+//     width: 45%;
+//     h2{
+//         text-align: center;
+//     }
+// }
+
 .upload-form {
     position: relative;
     top: 80px;
@@ -142,16 +154,6 @@
 }
 
 
-// .upload-card {
-//     display: flex;
-//     flex-direction: column;
-//     flex-wrap: wrap;
-//     width: 45%;
-//     h2{
-//         text-align: center;
-//     }
-// }
-
 #preview-video-zone {
     width: 40%;
     display: flex;
@@ -170,28 +172,8 @@
     justify-content: center;
 }
 
-
-
-// .form {
-//     width: 45vw;
-//     margin: 0 auto;
-//     display: flex;
-//     flex-direction: column;
-//     flex-wrap: wrap;
-// }
-
-// .form label {
-//     font-size: larger;
-//     font-weight: bolder;
-// }
-
-// .form button {
-//     margin-top: 10px;
-// }
-
 * { box-sizing: border-box; }
 @import url('https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap');
-
 
 body {
   font-family: 'Rubik', sans-serif;

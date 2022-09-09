@@ -18,7 +18,12 @@ export class UserController {
 
   @Get('id')
   getUserId(@Req() req: any){
-    return this.userService.findOne(req.user.email);
+    return this.userService.findUserId(req.user.email);
+  }
+
+  @Get('info')
+  getOneUserInfo(@Req() req: any){
+    return this.userService.findOneUser(req.user.email);
   }
 
   @Put('subscribe/:id')

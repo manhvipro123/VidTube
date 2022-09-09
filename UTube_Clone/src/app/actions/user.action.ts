@@ -8,3 +8,4 @@ export const subscribeFailure = createAction('[User] Subscribe Failure', props<{
 export const unSubscribe = createAction('[User] Unsubscribe', props<{ idToken: string, userIdToSub: string }>());
 export const unSubscribeSuccess = createAction('[User] Unsubscribe Success',props<{ user: User }>());
 export const unSubscribeFailure = createAction('[User] Unsubscribe Failure', props<{ error: string }>());
+

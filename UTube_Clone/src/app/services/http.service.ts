@@ -33,6 +33,10 @@ export class HttpService {
     return this.http.get<string>('http://127.0.0.1:5000/user/id', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
 
+  public getUserInfo(idToken: string) {
+    return this.http.get<User>('http://127.0.0.1:5000/user/info', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
+  }
+
   public subscribeUser(idToken: string, _id: string) {
     return this.http.put<User>('http://127.0.0.1:5000/user/subscribe/' + `${_id}`, '', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
@@ -87,7 +91,7 @@ export class HttpService {
     return this.http.get<Video[]>('http://127.0.0.1:5000/video/all');
   }
 
-  getAllVideosExceptUser(idToken: string) {
+  getAllVideosForUser(idToken: string) {
     return this.http.get<Video[]>('http://127.0.0.1:5000/video/all/user', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
 

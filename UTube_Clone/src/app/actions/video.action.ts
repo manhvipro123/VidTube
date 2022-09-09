@@ -5,6 +5,10 @@ export const getAllVideos = createAction('[Video] Get All Videos');
 export const getAllVideosSuccess = createAction('[Video] Get All Videos Success', props<{ videoList: Video[] }>());
 export const getAllVideosFailure = createAction('[Video] Get All Videos Failure', props<{ error: string }>());
 
+export const getAllVideosForUser = createAction('[Video] Get All Videos For User', props<{ idToken: string }>());
+export const getAllVideosForUserSuccess = createAction('[Video] Get All Videos For User Suceess', props<{ videoList: Video[] }>());
+export const getAllVideosForUserFailure = createAction('[Video] Get All Videos For User Failure', props<{ error: string }>());
+
 export const loadVideo = createAction('[Video] Load Video', props<{ _id: string }>());
 export const loadVideoSuccess = createAction('[Video] Load Video Success', props<{ video: Video }>())
 export const loadVideoFailure = createAction('[Video] Load Video Failure', props<{ error: string }>());

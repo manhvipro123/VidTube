@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { User } from "../models/user.model";
 
 export const login = createAction('[Auth] Login');
 export const loginSuccess = createAction('[Auth] Login Success', props<{ idToken: string }>());
@@ -19,3 +20,7 @@ export const logoutFailure = createAction('[Auth] Logout Failure', props<{ error
 export const saveRegistToken = createAction('[Auth] Save Regist Token',props<{idToken: string, uidForm: any}>());
 export const saveRegistTokenSuccess = createAction('[Auth] Save Regist Token Success',props<{tokenList : Object}>());
 export const saveRegistTokenFailure = createAction('[Auth] Save Regist Token Failure', props<{ error: string }>());
+
+export const getUserInfo = createAction('[User] Get User Info', props<{ idToken: string}>());
+export const getUserInfoSuccess = createAction('[User] Get User Info Success',props<{ user: User }>());
+export const getUserInfoFailure = createAction('[User] Get User Info Failure', props<{ error: string }>());

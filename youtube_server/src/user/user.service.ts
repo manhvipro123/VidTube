@@ -87,11 +87,12 @@ export class UserService {
     }
   }
 
-  findOneUser(email:string){
+  async findOneUser(email:string){
     try{
-      return this.userModel
+      return await this.userModel
       .findOne({email})
       .populate('subscriberList', '_id name photoUrl', this.userModel)
+      .exec();
     }catch(err){
       console.log(err);
     }

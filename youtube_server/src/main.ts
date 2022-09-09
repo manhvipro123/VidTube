@@ -16,7 +16,7 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets('uploads/vids/cvt')
-  await app.listen(sv);
+  await app.listen(sv,"0.0.0.0");
   console.log(`sever is running on: http://127.0.0.1:${sv}/`)
 }
 bootstrap();

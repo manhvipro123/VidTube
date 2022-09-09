@@ -96,6 +96,8 @@ export class VideoController {
     return this.videoService.findAllVideoInfo();
   }
 
+  
+
   // @Get('all/user')
   // async getAllVideosInfoExceptUser(@Headers('Authorization') idToken: string) {
   //   let verifiedToken = await this.authService.verifyToken(idToken);
@@ -151,6 +153,13 @@ export class VideoController {
     console.log(`video with id ${id} was undisliked by this ${req.user.email} user`);
     return this.videoService.undislikeVideo(id, req.user.email);
   }
+
+
+  @Delete()
+  async deleteVideo(@Query('id') id:string,@Query('path') path:string){
+    return await this.videoService.deleteVideo(id,path);
+  }
+
 
   // @Post('upload/video')
   // @UseInterceptors(FileFieldsInterceptor(

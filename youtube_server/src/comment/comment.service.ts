@@ -42,4 +42,8 @@ export class CommentService {
             console.log(err);
         }
     }
+
+    async deleteAllCommentFromVid(video_id:string){
+        await this.commentModel.deleteMany({video : Object(video_id)}).exec();
+    }
 }

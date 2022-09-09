@@ -35,7 +35,7 @@ export const authReducer = createReducer(
             ...state,
             error: action.error
         }
-        console.log(newState);
+        console.log(action.error);
         return newState;
     }),
 
@@ -50,15 +50,15 @@ export const authReducer = createReducer(
             isAuthenticated: true,
             idToken: action.idToken,
         }
-        console.log(action.idToken);
+        console.log(action.type);
         return newState;
     }), on(AuthActions.getIdTokenFailure, (state, action) => {
         let newState = {
             ...state,
             error: action.error
         }
-        console.log(newState);
-        return state;
+        console.log(action.error);
+        return newState;
     }),
 
 

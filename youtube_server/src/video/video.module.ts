@@ -8,6 +8,7 @@ import { UserModule } from 'src/user/user.module';
 import { forwardRef } from '@nestjs/common';
 import { UserSchema } from 'src/models/user.schema';
 import { SuggestionModule } from 'src/suggestion/suggestion.module';
+import { CommentModule } from 'src/comment/comment.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SuggestionModule } from 'src/suggestion/suggestion.module';
     MongooseModule.forFeature([{ name: 'user', schema: UserSchema }],'youtube-clone'),    
     forwardRef(() => UserModule),
     forwardRef(() => SuggestionModule),
+    forwardRef(() => CommentModule),
   ],
   controllers: [VideoController],
   providers: [VideoService,AuthService],

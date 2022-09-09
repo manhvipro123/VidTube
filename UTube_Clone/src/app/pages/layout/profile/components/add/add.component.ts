@@ -102,7 +102,7 @@ export class AddComponent implements OnInit {
         // console.log(form.hashtags);
         hashtags = form.hashtags.trim();
         hashtags = hashtags.split(" ");
-        console.log(hashtags);
+        // console.log(hashtags);
       }
 
       let newForm : Video = {
@@ -136,7 +136,7 @@ export class AddComponent implements OnInit {
       }
       this.videoFiles.push(...event.addedFiles);
       this.convertThumb();
-      console.log(this.videoFiles);
+      // console.log(this.videoFiles);
     } else {
       // this.rejectedFiles.push(...event.rejectedFiles);
       // console.log(this.rejectedFiles);
@@ -158,7 +158,7 @@ export class AddComponent implements OnInit {
         console.log(this.imageFiles);
       }
       this.imageFiles.push(...event.addedFiles);
-      console.log(this.imageFiles);
+      // console.log(this.imageFiles);
     } else {
       // this.rejectedFiles.push(...event.rejectedFiles);
       // console.log(this.rejectedFiles);

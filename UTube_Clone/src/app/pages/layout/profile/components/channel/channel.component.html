@@ -41,7 +41,7 @@
             <div class="channel-subscriber-count">{{(author$ | async)?.subscribers}} subscribers</div>
 
         </div>
-
+<!-- 
         <div class="channel-subscribe">
 
             <button class="subscribe-btn btn">Subscribed</button>
@@ -49,7 +49,7 @@
             <button class="notification-btn btn" aria-label="Enable Notifications"><i class="fas fa-bell"
                     aria-hidden="true"></i></button>
 
-        </div>
+        </div> -->
     </div>
 </section>
 <!-- End of channel info section -->
@@ -108,8 +108,11 @@
 
             <div class="featured-video" *ngFor="let vid of videoList$ | async ; let i = index">
 
-                <div class="video-thumbnail" *ngIf="i == 0" (click)="playVideo(vid._id)">
-                    <img src="{{vid.photoURL}}">
+                <div class="video-thumbnail" *ngIf="i == 0">
+                    <img src="{{vid.photoURL}}" (click)="playVideo(vid._id)">
+                    <div id="overlay" matTooltip="Video was creating" *ngIf="vid.isHidden">
+                        <div class="loader"></div>
+                    </div>
                 </div>
 
                 <div class="video-info" *ngIf="i == 0">
@@ -130,10 +133,10 @@
 
                 <div class="playlist-videos">
 
-                    <div class="playlist-video" tabindex="0" *ngFor="let vid of videoList$ | async" (click)="playVideo(vid._id)">
+                    <div class="playlist-video" tabindex="0" *ngFor="let vid of videoAvailableList" >
 
                         <div class="video-thumbnail">
-                            <img src="{{vid.photoURL}}">
+                            <img src="{{vid.photoURL}}" (click)="playVideo(vid._id)">
                         </div>
 
                         <div class="video-info">
@@ -142,6 +145,7 @@
                                 <li class="video-creator">{{vid.owner.name}} <i class="fas fa-check-circle"></i></li>
                                 <li class="video-views">{{vid.views}} views</li>
                                 <li class="video-upload-date">{{vid.timeConvert}}</li>
+                                <li><i class="fa fa-trash" aria-hidden="true" matTooltip="Delete the video" (click)="openDeleteNotifyDialog(vid._id,vid.url,'1000ms', '1000ms')"></i></li>
                             </ul>
                         </div>
                     </div>

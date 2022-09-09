@@ -19,6 +19,7 @@ export const videoReducer = createReducer(
     /////////////////////////////////////////////////////////////////////////////
     on(VideoActions.getAllVideos, (state, action) => {
         let newState = {
+            
             ...state,
             videoList: [],
             isLoading: true,
@@ -33,7 +34,7 @@ export const videoReducer = createReducer(
             isLoading: false,
             videoList: action.videoList
         }
-        console.log(action.type, newState.videoList);
+        console.log(action.type);
         return newState
     }),
     on(VideoActions.getAllVideosFailure, (state, action) => {
@@ -63,7 +64,7 @@ export const videoReducer = createReducer(
             isLoading: false,
             videoList: action.videoList
         }
-        console.log(action.type, newState.videoList);
+        console.log(action.type);
         return newState
     }),
     on(VideoActions.getAllVideosForUserFailure, (state, action) => {
@@ -93,7 +94,7 @@ export const videoReducer = createReducer(
             isLoading: false,
             videoLoad: action.video
         }
-        console.log(action.type, action.video);
+        console.log(action.type);
         return newState;
     }),
     on(VideoActions.loadVideoFailure, (state, action) => {
@@ -124,7 +125,7 @@ export const videoReducer = createReducer(
             isLoading: false,
             videoList: action.videoList
         }
-        console.log(action.type, newState.videoList);
+        console.log(action.type);
         return newState
     }),
     on(VideoActions.getEntireVideosFailure, (state, action) => {
@@ -157,7 +158,7 @@ export const videoReducer = createReducer(
             isSuccess: true,
             videoLoad: action.videoInfo
         }
-        console.log(action.type, action.videoInfo);
+        console.log(action.type);
         return newState
     }),
     on(VideoActions.createVideoInfoFailure, (state, action) => {
@@ -178,7 +179,7 @@ export const videoReducer = createReducer(
             isLoading: true,
             idToken: action.idToken,
         }
-        console.log(action.type, action.video_id);
+        console.log(action.type);
         return newState
     }),
     on(VideoActions.uploadVideoSuccess, (state, action) => {
@@ -187,7 +188,7 @@ export const videoReducer = createReducer(
             idToken: "",
             isLoading: false,
         }
-        console.log(action.type, action.filePath);
+        // console.log(action.type, action.filePath);
         return newState
     }),
     on(VideoActions.uploadVideoFailure, (state, action) => {
@@ -216,7 +217,9 @@ export const videoReducer = createReducer(
             ...state,
             isLoading: false,
         }
-        console.log(new Date().toLocaleTimeString(), action.views);
+        // console.log(new Date().toLocaleTimeString(), action.views);
+        console.log(action.type);
+
         return newState;
     }),
     on(VideoActions.countViewsVideoFailure, (state, action) => {
@@ -259,7 +262,7 @@ export const videoReducer = createReducer(
             _id: "",
             idToken: "",
         }
-        console.log(action.type);
+        console.log(action.error);
         return newState;
     }),
 
@@ -292,7 +295,7 @@ export const videoReducer = createReducer(
             _id: "",
             idToken: "",
         }
-        console.log(action.type);
+        console.log(action.error);
         return newState;
     }),
 
@@ -326,7 +329,7 @@ export const videoReducer = createReducer(
             _id: "",
             idToken: "",
         }
-        console.log(action.type);
+        console.log(action.error);
         return newState;
     }),
 
@@ -359,7 +362,43 @@ export const videoReducer = createReducer(
             _id: "",
             idToken: "",
         }
+        console.log(action.error);
+        return newState;
+    }),
+
+       ///////////////////////////////////////////////////////////////////////
+       on(VideoActions.deleteVideo, (state, action) => {
+        let newState = {
+            ...state,
+            isLoading: true,
+            isSuccess: false,
+            _id: action._id,
+            idToken: action.idToken
+        }
         console.log(action.type);
+        return newState;
+    }),
+    on(VideoActions.deleteVideoSuccess, (state, action) => {
+        let newState = {
+            ...state,
+            _id: "",
+            idToken: "",
+            isLoading: false,
+            isSuccess: true,
+        }
+        console.log(action.type,action.success);
+        return newState;
+    }),
+    on(VideoActions.deleteVideoFailure, (state, action) => {
+        let newState = {
+            ...state,
+            isLoading: false,
+            error: action.error,
+            _id: "",
+            idToken: "",
+            isSuccess: false,
+        }
+        console.log(action.error);
         return newState;
     }),
 

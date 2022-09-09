@@ -4,12 +4,13 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { SuggestionService } from 'src/suggestion/suggestion.service';
 import { VideoService } from 'src/video/video.service';
 import { MediaService } from './media.service';
 
 @Controller('media')
 export class MediaController {
-  constructor(public mediaService: MediaService,public videoService : VideoService) { }
+  constructor(public mediaService: MediaService,public videoService : VideoService, public suggestionService :SuggestionService) { }
 
   // @Post('test')
   // test() {
@@ -35,6 +36,7 @@ export class MediaController {
     if (file) {
       let file_inf = await this.mediaService.cutVideo(file);
       if(file_inf.filename){
+        await this.suggestionService.updateSuggestStatus(video_id);
         return await this.videoService.updateVideoInfoWithUrl(video_id,file_inf.filename);
       }else{
         return new Object({filename:""});

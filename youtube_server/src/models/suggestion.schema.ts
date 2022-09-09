@@ -20,6 +20,9 @@ export class Suggestion {
 
     @Prop()
     video_id: string;
+
+    @Prop()
+    isExist: boolean;
 }
 
 export const SuggestionSchema = SchemaFactory.createForClass(Suggestion);

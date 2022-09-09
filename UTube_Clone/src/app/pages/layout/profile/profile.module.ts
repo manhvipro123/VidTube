@@ -9,13 +9,18 @@ import { ProgressComponent } from './components/progress/progress.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddComponent } from './components/add/add.component';
 import { ChannelComponent } from './components/channel/channel.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteNotifyDialogComponent } from './components/delete-notify-dialog/delete-notify-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ProgressComponent,
     AddComponent,
-    ChannelComponent
+    ChannelComponent,
+    DeleteNotifyDialogComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +28,11 @@ import { ChannelComponent } from './components/channel/channel.component';
     NgxDropzoneModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule
+    
   ]
 })
 export class ProfileModule { }

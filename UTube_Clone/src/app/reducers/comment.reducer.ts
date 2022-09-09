@@ -16,6 +16,7 @@ export const commentReducer = createReducer(
     on(CommentActions.WriteComment,(state,action) => {
         console.log(action.type);
         const newState = {
+
             ...state,
             isSuccess : false,
             isLoading : true,
@@ -37,7 +38,7 @@ export const commentReducer = createReducer(
         return newState
     }),
     on(CommentActions.WriteCommentFailure,(state,action) => {
-        console.log(action.type);
+        console.log(action.error);
         const newState = {
             ...state,
             error : action.error,
@@ -58,7 +59,7 @@ export const commentReducer = createReducer(
         return newState
     }),
     on(CommentActions.GetAllCommentsFromThatVideoSuccess,(state,action) => {
-        console.log(action.type,action.commentList);
+        console.log(action.type);
         const newState = {
             ...state,
             isLoading : false,
@@ -68,7 +69,7 @@ export const commentReducer = createReducer(
         return newState
     }),
     on(CommentActions.GetAllCommentsFromThatVideoFailure,(state,action) => {
-        console.log(action.type);
+        console.log(action.error);
         const newState = {
             ...state,
             error : action.error,

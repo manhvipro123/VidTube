@@ -103,7 +103,7 @@ export class PlayComponent implements OnInit {
     //get like and dislike at that time video was play
     this.video$.subscribe((value) => {
       if (value.likes != undefined && value.dislikes != undefined && value.url != undefined) {
-        this.source = `http://127.0.0.1:5000/${value.url}-conv/main.m3u8`
+        this.source = `https://server.firev.manhvipro.xyz/${value.url}-conv/main.m3u8`
         // this.source = `http://127.0.0.1:5000/1662479356341-523049444.mp4-conv/main.m3u8`
         let audioControl = document.getElementById('video');
         this.hlsService.hls.loadSource(this.source)
@@ -291,14 +291,14 @@ export class PlayComponent implements OnInit {
   predictTimeToCount(event: any, videoId: string) {
     this.duration = Math.floor(event.target.duration);
     this.timePlay = Date.now();
-    console.log(`time has played: ${this.totalTime / 1000} s`);
+    // console.log(`time has played: ${this.totalTime / 1000} s`);
     if (this.totalTime == 0) {
       this.timeOutId = setTimeout(() => {
         if (this.isCount == false) {
           this.video$.subscribe((video) => {
             if (video.owner._id != this.userId) {
               this.isCount = !this.isCount;
-              console.log("+1");
+              // console.log("+1");
               this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
 
             }
@@ -312,7 +312,7 @@ export class PlayComponent implements OnInit {
           this.video$.subscribe((video) => {
             if (video.owner._id != this.userId) {
               this.isCount = !this.isCount;
-              console.log("+1");
+              // console.log("+1");
               this.store.dispatch(VideoActions.countViewsVideo({ _id: videoId }));
             }
           })

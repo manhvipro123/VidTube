@@ -53,7 +53,7 @@ export class UserService {
       const user_Sub = await this.userModel.findOne({
         email: email
       })
-
+      if(user.subscriberList.includes)
       user.subscriberList.push(user_Sub);
       user.subscribers = user.subscribers + 1;
 

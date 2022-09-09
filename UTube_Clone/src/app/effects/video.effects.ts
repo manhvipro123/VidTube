@@ -219,4 +219,13 @@ export class VideoEffects {
         }),
         catchError(error => of(VideoActions.undislikeVideoFailure({ error }))),
     ))
+
+    deleteVideoEffect = createEffect(() => this.action$.pipe(
+        ofType(VideoActions.deleteVideo),
+        switchMap((state) => this.httpService.deleteVideo(state.idToken, state._id,state.path)),
+        map((success) => {
+            return VideoActions.deleteVideoSuccess({ success });
+        }),
+        catchError(error => of(VideoActions.deleteVideoFailure({ error }))),
+    ))
 }

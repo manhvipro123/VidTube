@@ -11,7 +11,7 @@ export class SuggestionService {
 
   async findAllTitleData(){
     return await this.suggestionModel
-    .find({})
+    .find({ isExist : true})
     .select('-__v -updatedAt -createdAt');
   }
 
@@ -19,6 +19,7 @@ export class SuggestionService {
     const newSuggestion = new this.suggestionModel();
     newSuggestion.title = video.title;
     newSuggestion.video_id = video._id;
+    newSuggestion.isExist = false;
     return await newSuggestion.save();
   }
 
@@ -72,17 +73,26 @@ export class SuggestionService {
       data[i].vec = this.stringToVect(data[i].title, dict);
       // console.log(data[i].vec)
     }
- 
     //calc distance
     for (let i = 0; i < data.length; i++) {
       data[i].dist = this.distance(vecSearch, data[i].vec);
       // console.log(data[i].vec)
     }
-
     //sort by distance
     data.sort((a: { dist: number; }, b: { dist: number; }) => a.dist - b.dist);
     // console.log(data);
     return data;
+  }
+
+  
+  async deleteTitleData(video_id: any) {
+    await this.suggestionModel.deleteMany({
+        video_id
+    }).exec();
+  }
+
+  async updateSuggestStatus(video_id){
+    await this.suggestionModel.findOneAndUpdate({video_id},{isExist:true}).exec();
   }
 
 

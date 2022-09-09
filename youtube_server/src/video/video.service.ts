@@ -1,14 +1,17 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CommentService } from 'src/comment/comment.service';
 import { UserDocument } from 'src/models/user.schema';
 import { Video, VideoDocument } from 'src/models/video.schema';
 import { SuggestionService } from 'src/suggestion/suggestion.service';
 import { UserService } from 'src/user/user.service';
+import { rmdirSync } from 'fs';
 
 @Injectable()
 export class VideoService {
   constructor(
+    private commentService : CommentService,
     private userService: UserService,
     private suggestionService : SuggestionService,
     @InjectModel('video', 'youtube-clone') private videoModel: Model<VideoDocument>,
@@ -24,6 +27,7 @@ export class VideoService {
       newVideo.owner = user_Indb._id;
       const _video = await newVideo.save();
       await this.suggestionService.createTitleData(_video);
+      
       // this.userModel.
       //   findByIdAndUpdate(
       //     user_Indb._id, { ...user_Indb, videoList: [...user_Indb.videoList, _video._id] }
@@ -223,7 +227,7 @@ export class VideoService {
         const id = await this.userService.findUserId(user.email);
         return this.videoModel
           .find({ owner:  Object(id) })
-          .select('-url -likes -dislikes -comments')
+          .select('-likes -dislikes -comments -dislikeList -likeList -hashtags')
           .populate('owner', '_id name photoUrl subscribers', this.userModel)
           .sort({ createdAt: -1 });
       }else{
@@ -233,4 +237,23 @@ export class VideoService {
       console.log(err);
     }
   }
+
+  
+  async deleteVideo(id: string,path:string) {
+    try{
+      rmdirSync(`./uploads/vids/cvt/${path}-conv`, { recursive: true});
+      await this.suggestionService.deleteTitleData(id);
+      await this.commentService.deleteAllCommentFromVid(id);
+      const isSucces = await this.videoModel.findOneAndDelete({ _id: id });
+      
+      if(isSucces){
+          return true;
+      }else{
+          return false;
+      }
+    }catch(err){
+      console.log(err);
+    }
+ 
+}
 }

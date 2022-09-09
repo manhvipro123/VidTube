@@ -18,6 +18,7 @@ import { VideoModule } from 'src/video/video.module';
     forwardRef(() => VideoModule),
   ],
   controllers: [CommentController],
-  providers: [CommentService]
+  providers: [CommentService],
+  exports: [CommentService]
 })
 export class CommentModule {}

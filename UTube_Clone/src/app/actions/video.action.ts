@@ -44,3 +44,7 @@ export const dislikeVideoFailure = createAction('[Video] Dislike Video Failure',
 export const undislikeVideo = createAction('[Video] Undislike Video', props<{ idToken: string, _id: string }>());
 export const undislikeVideoSuccess = createAction('[Video] Undislike Video Success', props<{ dislikes: number }>());
 export const undislikeVideoFailure = createAction('[Video] Undislike Video Failure', props<{ error: string }>());
+
+export const deleteVideo = createAction('[Video] Delete Video', props<{ idToken: string, _id: string, path:string }>());
+export const deleteVideoSuccess = createAction('[Video] Delete Video Success', props<{ success : boolean }>());
+export const deleteVideoFailure = createAction('[Video] Delete Video Failure', props<{ error: string }>());

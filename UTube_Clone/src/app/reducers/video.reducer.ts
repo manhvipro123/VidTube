@@ -10,7 +10,8 @@ const inititalState: VideoState = {
     idToken: "",
     videoLoad: <Video>{},
     _id: "",
-    isSuccess: false
+    isSuccess: false,
+    isDelete: false,
 }
 
 export const videoReducer = createReducer(
@@ -19,7 +20,7 @@ export const videoReducer = createReducer(
     /////////////////////////////////////////////////////////////////////////////
     on(VideoActions.getAllVideos, (state, action) => {
         let newState = {
-            
+
             ...state,
             videoList: [],
             isLoading: true,
@@ -152,6 +153,7 @@ export const videoReducer = createReducer(
     }),
     on(VideoActions.createVideoInfoSuccess, (state, action) => {
         let newState = {
+
             ...state,
             idToken: "",
             isLoading: false,
@@ -366,12 +368,12 @@ export const videoReducer = createReducer(
         return newState;
     }),
 
-       ///////////////////////////////////////////////////////////////////////
-       on(VideoActions.deleteVideo, (state, action) => {
+    ///////////////////////////////////////////////////////////////////////
+    on(VideoActions.deleteVideo, (state, action) => {
         let newState = {
             ...state,
             isLoading: true,
-            isSuccess: false,
+            isDelete: false,
             _id: action._id,
             idToken: action.idToken
         }
@@ -384,9 +386,9 @@ export const videoReducer = createReducer(
             _id: "",
             idToken: "",
             isLoading: false,
-            isSuccess: true,
+            isDelete: true,
         }
-        console.log(action.type,action.success);
+        console.log(action.type, action.success);
         return newState;
     }),
     on(VideoActions.deleteVideoFailure, (state, action) => {
@@ -396,7 +398,7 @@ export const videoReducer = createReducer(
             error: action.error,
             _id: "",
             idToken: "",
-            isSuccess: false,
+            isDelete: false
         }
         console.log(action.error);
         return newState;

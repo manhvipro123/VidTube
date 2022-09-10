@@ -99,4 +99,16 @@ export class UserService {
 
   }
 
+  async findUserSubscribeList(email:string){
+    try{
+      const userToSub =  await this.userModel
+      .findOne({email}).exec();
+      const subList = await this.userModel.find({ subscriberList: { $in: [ Object(userToSub._id) ] }});
+      return subList;
+    }catch(err){
+      console.log(err);
+    }
+
+  }
+
 }

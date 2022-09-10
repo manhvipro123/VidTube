@@ -332,6 +332,11 @@ a {
     font-weight: 400;
 }
 
+.video-meta-data-main {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
 .video-description {
     font-size: 1rem;
     font-weight: 400;
@@ -347,6 +352,10 @@ a {
 //     max-width: 60rem;
 //     line-height: 1.4;
 // }
+
+.video-meta-data-main li {
+    display: inline-block;
+}
 
 .video-meta-data li {
     display: inline-block;

@@ -117,7 +117,7 @@ export class PlayComponent implements OnInit {
         this.dislikes_temp = value.dislikes;
         this.likeList = value.likeList;
         this.dislikeList = value.dislikeList;
-        console.log(`dislike: ${this.dislikes_temp} - like: ${this.likes_temp}`);
+        // console.log(`dislike: ${this.dislikes_temp} - like: ${this.likes_temp}`);
       }
     })
   }
@@ -132,7 +132,7 @@ export class PlayComponent implements OnInit {
       if (value) {
 
         this.userId = value;
-        console.log(this.userId);
+        // console.log(this.userId);
 
         let tempArr = this.author.subscriberList || [];
         // console.log(tempArr);
@@ -276,8 +276,8 @@ export class PlayComponent implements OnInit {
   }
 
   playVideo(id: string) {
-    this.router.navigateByUrl(`play/video/${id}`);
-    // window.location.href = `./play/video/${id}`
+    // this.router.navigateByUrl(`play/video/${id}`);
+    window.location.href = `./play/video/${id}`
   }
 
 

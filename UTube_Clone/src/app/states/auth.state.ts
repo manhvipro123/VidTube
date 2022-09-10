@@ -6,5 +6,6 @@ export interface AuthState{
     error: string;
     _id: string;
     registrationTokensList: Object;
-    user: User
+    user: User;
+    subList: User[];
 }

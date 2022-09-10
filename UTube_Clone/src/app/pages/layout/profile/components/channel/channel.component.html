@@ -117,9 +117,9 @@
 
                 <div class="video-info" *ngIf="i == 0">
                     <h3 class="video-title">{{vid.title}}</h3>
-                    <ul class="video-meta-data">
-                        <li class="video-creator">{{vid.owner.name}} <i class="fas fa-check-circle"></i></li>
-                        <li class="video-views">{{vid.owner.subscribers}} views</li>
+                    <ul class="video-meta-data-main">
+                        <li class="video-creator">{{vid.owner.name}}  <i class="fas fa-check-circle"></i></li>
+                        <li class="video-views">{{vid.views}} views</li>
                         <li class="video-upload-date">{{vid.timeConvert}}</li>
                     </ul>
                     <p class="video-description" [innerHtml]="vid.description"></p>
@@ -136,7 +136,7 @@
                     <div class="playlist-video" tabindex="0" *ngFor="let vid of videoAvailableList" >
 
                         <div class="video-thumbnail">
-                            <img src="{{vid.photoURL}}" (click)="playVideo(vid._id)">
+                            <img  style="height: 189px;" src="{{vid.photoURL}}" (click)="playVideo(vid._id)">
                         </div>
 
                         <div class="video-info">

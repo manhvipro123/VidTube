@@ -47,7 +47,7 @@ export class MainComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.interactService.listenToggleMenu((isCheck) => {
       this.isMinimize = isCheck
-      console.log(this.isMinimize)
+      // console.log(this.isMinimize)
       this.changeDetector.detectChanges()
     });
 

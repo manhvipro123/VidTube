@@ -27,20 +27,22 @@ export class SidebarComponent implements OnInit {
   userId$ = this.store.select((state) => state.auth._id);
   isMinimize: boolean = true;
   idToken$ = this.store.select((state) => state.auth.idToken)
-  userInfo$ = this.store.select((state) => state.auth.user)
+  userInfo$ = this.store.select((state) => state.auth.user);
+  userSubList$ = this.store.select((state) => state.auth.subList);
   constructor(private interactService: InteractService, private changeDetector: ChangeDetectorRef, private store: Store<{ auth: AuthState }>) {
 
   }
   ngOnInit(): void {
     this.interactService.listenToggleMenu((isCheck) => {
       this.isMinimize = isCheck
-      console.log(this.isMinimize)
+      // console.log(this.isMinimize)
       // this.changeDetector.detectChanges()
     });
 
     this.idToken$.subscribe(token => {
       if (token && token != "") {
         this.store.dispatch(AuthActions.getUserInfo({ idToken: token }));
+        this.store.dispatch(AuthActions.getUserToSubList({ idToken: token }));
       }
     })
 

@@ -17,7 +17,7 @@ export class ChannelComponent implements OnInit {
   idToken : string = "";
   isCurrent: number = 0;
   
-  isSuccess$ = this.store.select(state => state.video.isSuccess);
+  isDelete$ = this.store.select(state => state.video.isDelete);
   idToken$ = this.store.select(state => state.auth.idToken);
   
   author$ = this.store.select(state => state.auth.user);
@@ -39,7 +39,7 @@ export class ChannelComponent implements OnInit {
 
   ngOnInit(): void {
     //check when user cmt video 
-    this.isSuccess$.subscribe((value) => {
+    this.isDelete$.subscribe((value) => {
       if (value == true) {
         this.store.dispatch(VideoActions.getAllVideosForUser({ idToken: this.idToken }));
         this._snackBar.open('Delete Video Success', 'Close', {

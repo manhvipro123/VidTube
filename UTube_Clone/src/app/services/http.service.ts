@@ -37,6 +37,10 @@ export class HttpService {
     return this.http.get<User>(environment.httpspoint +'user/info', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }
 
+  public getUserSubList(idToken: string) {
+    return this.http.get<User[]>(environment.endpoint +'user/toSubList', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
+  }
+
   public subscribeUser(idToken: string, _id: string) {
     return this.http.put<User>(environment.httpspoint +'user/subscribe/' + `${_id}`, '', { headers: new HttpHeaders({ 'Authorization': `${idToken}` }) });
   }

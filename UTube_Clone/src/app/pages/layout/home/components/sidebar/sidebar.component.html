@@ -27,10 +27,10 @@
         <hr>
         <div class="subscribed-list">
             <h3>SUBSCRIBED</h3>
-            <a *ngFor="let subUser of (userInfo$ | async)?.subscriberList">
+            <a *ngFor="let subUser of (userSubList$ | async)">
                 <img src="{{subUser.photoUrl}}" (error)="handleError($event)">
                 <p *ngIf="(userId$ | async) != subUser._id">{{subUser.name}}</p>
-                <p *ngIf="(userId$ | async) == subUser._id">{{subUser.name}}(Me)</p>
+                <p *ngIf="(userId$ | async) == subUser._id">{{subUser.name}} (Me)</p>
             </a>
 
         </div>

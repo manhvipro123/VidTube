@@ -55,5 +55,13 @@ export class AuthEffects {
         map((user) => AuthActions.getUserInfoSuccess({ user })),
         catchError(error => of(AuthActions.getUserInfoFailure({ error: error }))),
     ))
+
+    
+    getUserToSubListEffect = createEffect(() => this.action$.pipe(
+        ofType(AuthActions.getUserToSubList),
+        switchMap((state) => this.httpService.getUserSubList(state.idToken)),
+        map((subList) => AuthActions.getUserToSubListSuccess({ subList })),
+        catchError(error => of(AuthActions.getUserToSubListFailure({ error: error }))),
+    ))
  
 }

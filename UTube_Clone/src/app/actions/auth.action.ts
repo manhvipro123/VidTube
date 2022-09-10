@@ -24,3 +24,7 @@ export const saveRegistTokenFailure = createAction('[Auth] Save Regist Token Fai
 export const getUserInfo = createAction('[User] Get User Info', props<{ idToken: string}>());
 export const getUserInfoSuccess = createAction('[User] Get User Info Success',props<{ user: User }>());
 export const getUserInfoFailure = createAction('[User] Get User Info Failure', props<{ error: string }>());
+
+export const getUserToSubList = createAction('[User] Get User To Sub List', props<{ idToken: string}>());
+export const getUserToSubListSuccess = createAction('[User] Get User To Sub List Success',props<{ subList: User[] }>());
+export const getUserToSubListFailure = createAction('[User]  Get User To Sub List Failure', props<{ error: string }>());

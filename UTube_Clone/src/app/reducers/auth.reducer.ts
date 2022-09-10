@@ -9,7 +9,8 @@ const inititalState: AuthState = {
     error: "",
     _id: "",
     registrationTokensList: {},
-    user: <User>{}
+    user: <User>{},
+    subList: []
 }
 
 export const authReducer = createReducer(
@@ -173,6 +174,37 @@ export const authReducer = createReducer(
         console.log(newState);
         return state;
     }),
+
+    ////////////////////////////////////////////////////
+    on(AuthActions.getUserToSubList, (state, action) => {
+        console.log(action.type);
+        let newState = {
+            ...state,
+            idToken: action.idToken,
+            isAuthenticated: false,
+            subList: []
+        };
+        return newState
+    }),
+    on(AuthActions.getUserToSubListSuccess, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: true,
+            subList: action.subList
+        }
+        console.log(action.type);
+        return newState;
+    }), on(AuthActions.getUserInfoFailure, (state, action) => {
+        let newState = {
+            ...state,
+            isAuthenticated: false,
+            error: action.error,
+            subList: []
+        }
+        console.log(newState);
+        return state;
+    }),
+
 
 
 )

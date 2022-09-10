@@ -48,6 +48,21 @@ export class AddComponent implements OnInit {
       this.token = token;
       // console.log(this.token);
     })
+
+    this.isvideoInfoCreate$.subscribe(value => {
+      if (value.isSuccess == true) {
+        this.store.dispatch(VideoActions.uploadVideo({ idToken: this.token, videoFile: this.videoFiles[0] , video_id: value.videoLoad._id}))
+        setTimeout(()=>{
+          this.showSpinner = false;
+          this._snackBar.open("Upload is processing,", "close", {
+            duration: 3000,
+            horizontalPosition: 'left',
+            verticalPosition: 'bottom',
+          });
+          this.resetForm();
+        },45000);
+      } 
+    })
   }
 
   ngOnInit(): void {
@@ -57,21 +72,6 @@ export class AddComponent implements OnInit {
       description: ['', Validators.required],
       hashtags: [''],
     });
-
-
-
-    this.isvideoInfoCreate$.subscribe(value => {
-      if (value.isSuccess == true) {
-        this.store.dispatch(VideoActions.uploadVideo({ idToken: this.token, videoFile: this.videoFiles[0] , video_id: value.videoLoad._id}))
-        this.showSpinner = false;
-        this._snackBar.open("Upload is processing,", "close", {
-          duration: 3000,
-          horizontalPosition: 'left',
-          verticalPosition: 'bottom',
-        });
-        this.resetForm();
-      }
-    })
   }
 
   resetForm() {

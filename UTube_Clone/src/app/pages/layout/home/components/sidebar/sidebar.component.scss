@@ -15,7 +15,7 @@
 
 .shortcut-links a img{
     width: 20px;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .shortcut-links a{
@@ -35,6 +35,10 @@
     color: #ed3833;
 }
 
+.subscribed-list{
+    margin-right: 10px;
+}
+
 .sidebar hr{
     border: 0;
     height: 1px;
@@ -49,6 +53,7 @@
 }
 
 .subscribed-list a{
+   
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -59,8 +64,17 @@
 .subscribed-list a img{
     width: 25px;
     border-radius: 50%;
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-bottom: 5px;
 }
+
+.subscribed-list a p{
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 .small-sidebar{
     z-index: 2;

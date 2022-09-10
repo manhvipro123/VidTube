@@ -8,4 +8,5 @@ export interface VideoState{
     idToken: string;
     _id: string;
     isSuccess: boolean;
+    isDelete : boolean;
 }
